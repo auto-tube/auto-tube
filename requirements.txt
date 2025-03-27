@@ -1,0 +1,10 @@
+click
+ffmpeg-python
+opencv-python
+numpy
+tqdm
+pillow
+customtkinter
+tkinterdnd2
+scenedetect
+setuptools
