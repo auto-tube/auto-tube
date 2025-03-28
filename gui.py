@@ -230,7 +230,7 @@ class VideoClipperApp:
         )
         start_button.pack(pady=20)
 
-        # ----------------------- Subtitle Post-Processing Section -----------------------
+        # ----------------اريات Subtitle Post-Processing Section -----------------------
         ctk.CTkLabel(self.content_area, text="Subtitle Post-Processing", font=("Arial", 18, "bold")).pack(pady=(20, 5))
 
         # Select File to Subtitle
@@ -388,4 +388,23 @@ class VideoClipperApp:
         self.queue_listbox.delete(0, tk.END)  # Clear existing listbox items
         self.queue_tree.delete(*self.queue_tree.get_children())  # Clear the treeview
 
-        for file_path in self.video_queue
+        for file_path in self.video_queue:
+            self.queue_listbox.insert(tk.END, os.path.basename(file_path))
+            self.queue_tree.insert('', tk.END, values=(os.path.basename(file_path),))
+
+    def _select_output(self):
+        """Choose output folder."""
+        path = filedialog.askdirectory()
+        if path:  # Only set the path if a directory was selected
+            self.output_path_var.set(path)
+
+def main():
+    """Main function to run the application."""
+    app = TkinterDnD.Tk() #Initialize the Tk object for Drag and Drop capabilities
+    app.geometry("600x650") #set the window size
+    VideoClipperApp(app) #Run the app object
+    app.mainloop()#Start the app
+
+if __name__ == "__main__":
+    """When gui.py is the main file, do:"""
+    main()
