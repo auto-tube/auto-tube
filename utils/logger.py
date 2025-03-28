@@ -81,7 +81,7 @@ class VideoProcessor:
             raise VideoProcessingError(f"Could not determine video duration: {e}")
         except Exception as e:
             logger.error(f"Error probing video duration: {e}")
-            raise VideoProcessingError(f"Could not determine video duration: {e}")
+            raise VideoProcessingError(f"Video processing failed: {e}")
 
     def _get_clip_length_range(self, min_length: int, max_length: int) -> Tuple[int, int]:
         """
