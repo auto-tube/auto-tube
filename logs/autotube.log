@@ -1,0 +1,506 @@
+2025-03-28 17:37:53,606 - autotube - INFO - --- Starting processing for: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4 ---
+2025-03-28 17:37:53,607 - autotube - INFO - Options: clips=5, len=15-45s, scene_detect=False, threshold=30.0, crop=True, mirror=False, enhance=True, remove_audio=False, extract_audio=True
+2025-03-28 17:37:53,608 - autotube - INFO - Probing video duration for: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4 using ffprobe: C:\Users\V0iD\Downloads\ffmpeg-2025-03-27-git-114fccc4a5-full_build\bin\ffprobe.exe
+2025-03-28 17:37:53,716 - autotube - INFO - Determined duration: 1852.279002 seconds
+2025-03-28 17:37:53,716 - autotube - INFO - Video Duration: 1852.28s. Target clips: 5
+2025-03-28 17:37:53,716 - autotube - INFO - Clip 1: Start=0.00s, Duration=29.00s
+2025-03-28 17:38:01,217 - autotube - INFO - Successfully created clip: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4
+2025-03-28 17:38:01,218 - autotube - INFO - Clip 2: Start=29.00s, Duration=41.00s
+2025-03-28 17:38:11,923 - autotube - INFO - Successfully created clip: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4
+2025-03-28 17:38:11,924 - autotube - INFO - Clip 3: Start=70.00s, Duration=32.00s
+2025-03-28 17:38:20,308 - autotube - INFO - Successfully created clip: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4
+2025-03-28 17:38:20,309 - autotube - INFO - Clip 4: Start=102.00s, Duration=16.00s
+2025-03-28 17:38:24,736 - autotube - INFO - Successfully created clip: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4
+2025-03-28 17:38:24,737 - autotube - INFO - Clip 5: Start=118.00s, Duration=37.00s
+2025-03-28 17:38:34,516 - autotube - INFO - Successfully created clip: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4
+2025-03-28 17:38:34,516 - autotube - INFO - Extracting audio from saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp3
+2025-03-28 17:38:34,550 - autotube - ERROR - FFmpeg error during Extract Audio: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:29.00, start: 0.000000, bitrate: 3732 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3543 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 180 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+Expected number for q but found: a:2
+Error parsing options for output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp3.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,554 - autotube - INFO - Formatting (Crop) saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1_formatted.mp4
+2025-03-28 17:38:34,589 - autotube - ERROR - FFmpeg error during Format Video (Crop): ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:29.00, start: 0.000000, bitrate: 3732 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3543 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 180 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 0000020708e9eb00] Filtergraph 'crop=ih*9/16:ih' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1_formatted.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,592 - autotube - WARNING - Formatting failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4
+2025-03-28 17:38:34,593 - autotube - INFO - Enhancing saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1_enhanced.mp4
+2025-03-28 17:38:34,626 - autotube - ERROR - FFmpeg error during Enhance Video: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:29.00, start: 0.000000, bitrate: 3732 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3543 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 180 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 00000199ebe6e780] Filtergraph 'eq=contrast=1.1:brightness=0.02:saturation=1.1' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1_enhanced.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,629 - autotube - WARNING - Enhancement failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_1.mp4
+2025-03-28 17:38:34,630 - autotube - INFO - Extracting audio from saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp3
+2025-03-28 17:38:34,671 - autotube - ERROR - FFmpeg error during Extract Audio: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:41.00, start: 0.000000, bitrate: 3973 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3776 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 189 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+Expected number for q but found: a:2
+Error parsing options for output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp3.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,676 - autotube - INFO - Formatting (Crop) saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2_formatted.mp4
+2025-03-28 17:38:34,710 - autotube - ERROR - FFmpeg error during Format Video (Crop): ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:41.00, start: 0.000000, bitrate: 3973 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3776 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 189 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 0000018a000fea00] Filtergraph 'crop=ih*9/16:ih' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2_formatted.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,713 - autotube - WARNING - Formatting failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4
+2025-03-28 17:38:34,713 - autotube - INFO - Enhancing saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2_enhanced.mp4
+2025-03-28 17:38:34,746 - autotube - ERROR - FFmpeg error during Enhance Video: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:41.00, start: 0.000000, bitrate: 3973 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3776 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 189 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 000002561c095640] Filtergraph 'eq=contrast=1.1:brightness=0.02:saturation=1.1' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2_enhanced.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,749 - autotube - WARNING - Enhancement failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_2.mp4
+2025-03-28 17:38:34,749 - autotube - INFO - Extracting audio from saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp3
+2025-03-28 17:38:34,778 - autotube - ERROR - FFmpeg error during Extract Audio: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:32.00, start: 0.000000, bitrate: 3787 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3587 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 191 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+Expected number for q but found: a:2
+Error parsing options for output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp3.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,781 - autotube - INFO - Formatting (Crop) saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3_formatted.mp4
+2025-03-28 17:38:34,812 - autotube - ERROR - FFmpeg error during Format Video (Crop): ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:32.00, start: 0.000000, bitrate: 3787 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3587 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 191 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 0000011730a7eb80] Filtergraph 'crop=ih*9/16:ih' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3_formatted.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,816 - autotube - WARNING - Formatting failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4
+2025-03-28 17:38:34,816 - autotube - INFO - Enhancing saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3_enhanced.mp4
+2025-03-28 17:38:34,846 - autotube - ERROR - FFmpeg error during Enhance Video: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:32.00, start: 0.000000, bitrate: 3787 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3587 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 191 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 000001d94650c340] Filtergraph 'eq=contrast=1.1:brightness=0.02:saturation=1.1' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3_enhanced.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,851 - autotube - WARNING - Enhancement failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_3.mp4
+2025-03-28 17:38:34,851 - autotube - INFO - Extracting audio from saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp3
+2025-03-28 17:38:34,881 - autotube - ERROR - FFmpeg error during Extract Audio: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:16.00, start: 0.000000, bitrate: 3751 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3548 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 194 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+Expected number for q but found: a:2
+Error parsing options for output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp3.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,884 - autotube - INFO - Formatting (Crop) saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4_formatted.mp4
+2025-03-28 17:38:34,914 - autotube - ERROR - FFmpeg error during Format Video (Crop): ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:16.00, start: 0.000000, bitrate: 3751 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3548 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 194 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 0000028a6812f500] Filtergraph 'crop=ih*9/16:ih' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4_formatted.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,917 - autotube - WARNING - Formatting failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4
+2025-03-28 17:38:34,917 - autotube - INFO - Enhancing saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4_enhanced.mp4
+2025-03-28 17:38:34,947 - autotube - ERROR - FFmpeg error during Enhance Video: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:16.00, start: 0.000000, bitrate: 3751 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3548 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 194 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 000001f73937f940] Filtergraph 'eq=contrast=1.1:brightness=0.02:saturation=1.1' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4_enhanced.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,950 - autotube - WARNING - Enhancement failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_4.mp4
+2025-03-28 17:38:34,950 - autotube - INFO - Extracting audio from saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp3
+2025-03-28 17:38:34,978 - autotube - ERROR - FFmpeg error during Extract Audio: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:37.00, start: 0.000000, bitrate: 3902 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3706 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 188 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+Expected number for q but found: a:2
+Error parsing options for output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp3.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:34,981 - autotube - INFO - Formatting (Crop) saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5_formatted.mp4
+2025-03-28 17:38:35,010 - autotube - ERROR - FFmpeg error during Format Video (Crop): ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:37.00, start: 0.000000, bitrate: 3902 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3706 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 188 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 0000018ab9afb640] Filtergraph 'crop=ih*9/16:ih' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5_formatted.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:35,014 - autotube - WARNING - Formatting failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4
+2025-03-28 17:38:35,015 - autotube - INFO - Enhancing saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4 -> saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5_enhanced.mp4
+2025-03-28 17:38:35,043 - autotube - ERROR - FFmpeg error during Enhance Video: ffmpeg version 2025-03-27-git-114fccc4a5-full_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.2.0 (Rev1, Built by MSYS2 project)
+  configuration: --enable-gpl --enable-version3 --enable-static --disable-w32threads --disable-autodetect --enable-fontconfig --enable-iconv --enable-gnutls --enable-lcms2 --enable-libxml2 --enable-gmp --enable-bzlib --enable-lzma --enable-libsnappy --enable-zlib --enable-librist --enable-libsrt --enable-libssh --enable-libzmq --enable-avisynth --enable-libbluray --enable-libcaca --enable-libdvdnav --enable-libdvdread --enable-sdl2 --enable-libaribb24 --enable-libaribcaption --enable-libdav1d --enable-libdavs2 --enable-libopenjpeg --enable-libquirc --enable-libuavs3d --enable-libxevd --enable-libzvbi --enable-libqrencode --enable-librav1e --enable-libsvtav1 --enable-libvvenc --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs2 --enable-libxeve --enable-libxvid --enable-libaom --enable-libjxl --enable-libvpx --enable-mediafoundation --enable-libass --enable-frei0r --enable-libfreetype --enable-libfribidi --enable-libharfbuzz --enable-liblensfun --enable-libvidstab --enable-libvmaf --enable-libzimg --enable-amf --enable-cuda-llvm --enable-cuvid --enable-dxva2 --enable-d3d11va --enable-d3d12va --enable-ffnvcodec --enable-libvpl --enable-nvdec --enable-nvenc --enable-vaapi --enable-libshaderc --enable-vulkan --enable-libplacebo --enable-opencl --enable-libcdio --enable-libgme --enable-libmodplug --enable-libopenmpt --enable-libopencore-amrwb --enable-libmp3lame --enable-libshine --enable-libtheora --enable-libtwolame --enable-libvo-amrwbenc --enable-libcodec2 --enable-libilbc --enable-libgsm --enable-liblc3 --enable-libopencore-amrnb --enable-libopus --enable-libspeex --enable-libvorbis --enable-ladspa --enable-libbs2b --enable-libflite --enable-libmysofa --enable-librubberband --enable-libsoxr --enable-chromaprint
+  libavutil      59. 60.100 / 59. 60.100
+  libavcodec     61. 33.102 / 61. 33.102
+  libavformat    61.  9.108 / 61.  9.108
+  libavdevice    61.  4.100 / 61.  4.100
+  libavfilter    10.  9.100 / 10.  9.100
+  libswscale      8. 13.103 /  8. 13.103
+  libswresample   5.  4.100 /  5.  4.100
+  libpostproc    58.  4.100 / 58.  4.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf61.9.108
+  Duration: 00:00:37.00, start: 0.000000, bitrate: 3902 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 1280x720 [SAR 1:1 DAR 16:9], 3706 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+      encoder         : Lavc61.33.102 libx264
+  Stream #0:1[0x2](eng): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 188 kb/s (default)
+    Metadata:
+      handler_name    : ISO Media file produced by Google Inc.
+      vendor_id       : [0][0][0][0]
+[vost#0:0/copy @ 000001e8628006c0] Filtergraph 'eq=contrast=1.1:brightness=0.02:saturation=1.1' was specified, but codec copy was selected. Filtering and streamcopy cannot be used together.
+Error opening output file C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5_enhanced.mp4.
+Error opening output files: Invalid argument
+
+2025-03-28 17:38:35,046 - autotube - WARNING - Enhancement failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4
+2025-03-28 17:38:35,047 - autotube - INFO - --- Finished processing for: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4. Final clips: 5 ---
