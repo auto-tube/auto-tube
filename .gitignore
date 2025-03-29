@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+logs/*
+*.log
+*.pyc
+*.stats
+*.bak
+# Add any OS-specific files like .DS_Store (macOS) or Thumbs.db (Windows)

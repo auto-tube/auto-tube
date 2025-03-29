@@ -504,3 +504,6 @@ Error opening output files: Invalid argument
 
 2025-03-28 17:38:35,046 - autotube - WARNING - Enhancement failed for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_5.mp4
 2025-03-28 17:38:35,047 - autotube - INFO - --- Finished processing for: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4. Final clips: 5 ---
+2025-03-29 13:00:35,514 - autotube - INFO - --- Autotube Application Start (Main GUI) ---
+2025-03-29 15:32:10,307 - autotube - INFO - --- Autotube Application Start --- Python: 3.13.2, Platform: win32 ---
+2025-03-29 15:38:22,169 - autotube - INFO - --- Autotube Application Start --- Python: 3.13.2, Platform: win32 ---

@@ -4,7 +4,7 @@ import numpy as np
 import os
 import random
 from typing import List, Optional
-from utils.logger import setup_logging
+from utils.video_processor import setup_logging
 
 logger = setup_logging()
 
