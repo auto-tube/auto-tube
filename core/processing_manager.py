@@ -4,7 +4,7 @@ import time
 import os
 import traceback
 from typing import Callable, List, Dict, Any, Optional
-import random # Added for temp filenames in AI Short Gen
+import random # For temp filenames
 
 # --- Import utility functions and classes ---
 # Use try-except for robustness, especially during development/setup
@@ -14,14 +14,25 @@ tts_available = False
 sub_utils_available = False
 helpers_available = False
 ai_utils_available = False
+logger_available = False
+file_manager_available = False
+
 try:
+    # Attempt to import logger first
+    from utils.logger_config import setup_logging
+    logger = setup_logging() # Initialize logger early
+    logger_available = True
+
+    # Import other utilities
     from utils.video_processor import VideoProcessor, FFmpegNotFoundError, VideoProcessingError
     video_processor_available = True
     from utils.subtitle_utils import generate_ass_file_with_style
     sub_utils_available = True
     from utils.tts_utils import generate_polly_tts_and_marks
     tts_available = True
-    from utils.helpers import get_media_duration, prepare_background_video, combine_ai_short_elements
+    # Import the new finder function and refactored helpers from helpers.py
+    from utils.helpers import (find_ffmpeg_executables, get_media_duration,
+                               prepare_background_video, combine_ai_short_elements)
     helpers_available = True
     from utils.ai_utils import (generate_script_with_gemini,
                                 generate_hashtags_with_gemini,
@@ -29,211 +40,284 @@ try:
                                 generate_titles_with_gemini,
                                 GeminiError)
     ai_utils_available = True
+    from utils.file_manager import FileOrganizer # Import organizer
+    file_manager_available = True
 
+
+    # Check if all core utilities loaded successfully
     utils_loaded = (video_processor_available and tts_available and
-                    sub_utils_available and helpers_available and ai_utils_available)
-    if utils_loaded: print("ProcessingManager: All required utility modules loaded.")
-    else: print("ProcessingManager Warning: Not all utility modules loaded.")
+                    sub_utils_available and helpers_available and ai_utils_available and
+                    logger_available and file_manager_available)
+    if utils_loaded:
+        logger.info("ProcessingManager: All required utility modules loaded.")
+    else:
+        missing = []
+        if not video_processor_available: missing.append("video_processor")
+        if not tts_available: missing.append("tts_utils")
+        if not sub_utils_available: missing.append("subtitle_utils")
+        if not helpers_available: missing.append("helpers")
+        if not ai_utils_available: missing.append("ai_utils")
+        if not file_manager_available: missing.append("file_manager")
+        if not logger_available: missing.append("logger_config")
+        logger.warning(f"ProcessingManager Warning: Not all utility modules loaded. Missing: {', '.join(missing)}")
+
 
 except ImportError as import_error:
-    print(f"ERROR [ProcessingManager]: Failed to import one or more utility modules: {import_error}")
+    err_msg = f"ERROR [ProcessingManager]: Failed to import one or more utility modules: {import_error}"
+    # Use logger if available, otherwise print
+    # Ensure logger exists even if import failed above
+    if 'logger' not in globals() or not isinstance(logger, logging.Logger):
+        import logging; logging.basicConfig(level=logging.INFO); logger = logging.getLogger('autotube_fallback')
+        logger.critical(err_msg, exc_info=True) # Log the original error
+    else:
+        logger.critical(err_msg, exc_info=True)
+
     print("Processing functions might fail. Ensure utils package and contents are correct.")
-    # --- CORRECTED DUMMY DEFINITIONS ---
-    # Define dummy placeholders if imports fail
+    # --- Define dummy placeholders if imports fail ---
+
     if not video_processor_available:
         class VideoProcessor: pass
         class FFmpegNotFoundError(Exception): pass
         class VideoProcessingError(Exception): pass
     if not sub_utils_available:
-        def generate_ass_file_with_style(*args, **kwargs):
-            print("ERROR: subtitle_utils not loaded"); return False
+        def generate_ass_file_with_style(*a, **kw): logger.error("subtitle_utils not loaded"); return False
     if not tts_available:
-        def generate_polly_tts_and_marks(*args, **kwargs):
-            print("ERROR: tts_utils not loaded"); return None, None
+        def generate_polly_tts_and_marks(*a, **kw): logger.error("tts_utils not loaded"); return None, None
     if not helpers_available:
-        def get_media_duration(*args, **kwargs): print("ERROR: helpers not loaded"); return 0.0
-        def prepare_background_video(*args, **kwargs): print("ERROR: helpers not loaded"); return False
-        def combine_ai_short_elements(*args, **kwargs): print("ERROR: helpers not loaded"); return False
+        def find_ffmpeg_executables(*a, **kw): logger.error("helpers not loaded"); return None, None
+        def get_media_duration(*a, **kw): logger.error("helpers not loaded"); return 0.0
+        def prepare_background_video(*a, **kw): logger.error("helpers not loaded"); return False
+        def combine_ai_short_elements(*a, **kw): logger.error("helpers not loaded"); return False
     if not ai_utils_available:
-        def generate_script_with_gemini(*args, **kwargs):
-            print("ERROR: ai_utils not loaded"); raise ImportError("AI Utils not loaded")
-        def generate_hashtags_with_gemini(*args, **kwargs):
-            print("ERR: AI Utils not loaded"); return None
-        def generate_tags_with_gemini(*args, **kwargs):
-            print("ERR: AI Utils not loaded"); return None
-        def generate_titles_with_gemini(*args, **kwargs):
-            print("ERR: AI Utils not loaded"); return None
+        def generate_script_with_gemini(*a, **kw): logger.error("ai_utils not loaded"); raise ImportError("AI Utils not loaded")
+        def generate_hashtags_with_gemini(*a, **kw): logger.error("ai_utils not loaded"); return None
+        def generate_tags_with_gemini(*a, **kw): logger.error("ai_utils not loaded"); return None
+        def generate_titles_with_gemini(*a, **kw): logger.error("ai_utils not loaded"); return None
         class GeminiError(Exception): pass
-    # --- END CORRECTION ---
+    if not file_manager_available:
+        class FileOrganizer:
+             def __init__(*args, **kwargs): pass
+             def organize_output(self, *args, **kwargs): logger.error("FileOrganizer not loaded")
+    # --- End Dummies ---
 # --- End Imports ---
 
 
-# Define Callback Types (for type hinting - helps readability)
-ProgressCallback = Callable[[int, int, float], None] # index, total, start_time
+# Define Callback Types (Keep as before)
+ProgressCallback = Callable[[int, int, float], None]
 StatusCallback = Callable[[str], None]
-# Pass processing_state dict back in completion callback for state management
-ProcessingCompletionCallback = Callable[[str, int, int, int, Dict], None] # process_type, processed, errors, total, processing_state_dict
+ProcessingCompletionCallback = Callable[[str, int, int, int, Dict], None]
 ScriptCompletionCallback = Callable[[Optional[str], Optional[Exception]], None]
-MetadataCompletionCallback = Callable[[str, Optional[List[str]], Optional[Exception]], None] # type, result_list, error
+MetadataCompletionCallback = Callable[[str, Optional[List[str]], Optional[Exception]], None]
 
 
-# --- Clipping Queue Processing Function ---
+# --- Clipping Queue Processing Function (MODIFIED) ---
 def run_clipping_queue(video_queue: List[str], output_path: str, options: Dict[str, Any],
                        progress_callback: ProgressCallback, status_callback: StatusCallback,
                        completion_callback: ProcessingCompletionCallback, processing_state: Dict[str, bool]):
     """
     Processes videos in the queue for clipping. Runs in a thread.
     Uses callbacks for GUI updates and checks processing_state['active'] for stops.
+    Finds FFmpeg/FFprobe paths, passes them to VideoProcessor, and organizes output.
     """
-    if not utils_loaded or not video_processor_available:
-        status_callback("Error: Video processing module failed to load.")
-        completion_callback("Clipping", 0, len(video_queue), len(video_queue), processing_state)
-        processing_state['active'] = False # Ensure state is updated
-        return
+    logger.info("--- Starting Clipping Queue Processing Thread ---")
+    start_time = time.time() # Define start time early
+    # --- Find FFmpeg/FFprobe FIRST ---
+    ffmpeg_exec, ffprobe_exec = None, None
+    # Check dependencies required for this function
+    if not video_processor_available or not helpers_available:
+         missing_deps = []
+         if not video_processor_available: missing_deps.append("VideoProcessor")
+         if not helpers_available: missing_deps.append("Helpers (FFmpeg finder)")
+         err_msg = f"Error: Cannot start clipping. Missing dependencies: {', '.join(missing_deps)}"
+         logger.critical(err_msg)
+         status_callback(err_msg)
+         completion_callback("Clipping", 0, len(video_queue), len(video_queue), processing_state)
+         processing_state['active'] = False
+         return
+
+    # Dependencies seem loaded, try finding executables
+    try:
+        # Pass config paths from options if provided (though GUI now handles this)
+        conf_ffmpeg = options.get("config_ffmpeg_path", None)
+        conf_ffprobe = options.get("config_ffprobe_path", None)
+        ffmpeg_exec, ffprobe_exec = find_ffmpeg_executables(conf_ffmpeg, conf_ffprobe)
+        if not ffmpeg_exec or not ffprobe_exec:
+            # find_ffmpeg_executables logs details, raise specific error here
+            raise FFmpegNotFoundError("FFmpeg or FFprobe executable not found. Check system PATH, FFMPEG_PATH/FFPROBE_PATH env vars, or configure paths in Settings.")
+    except FFmpegNotFoundError as e:
+         logger.critical(f"FFmpeg/FFprobe Check Failed: {e}")
+         status_callback(f"Error: {e}")
+         completion_callback("Clipping", 0, len(video_queue), len(video_queue), processing_state)
+         processing_state['active'] = False
+         return
+    except Exception as e:
+         logger.critical(f"Unexpected error finding FFmpeg/FFprobe: {e}", exc_info=True)
+         status_callback("Error: Unexpected error finding FFmpeg/FFprobe.")
+         completion_callback("Clipping", 0, len(video_queue), len(video_queue), processing_state)
+         processing_state['active'] = False
+         return
+    logger.info(f"Clipping Queue: Using FFmpeg='{ffmpeg_exec}', FFprobe='{ffprobe_exec}'")
+    # --- End FFmpeg Find ---
 
     total_videos = len(video_queue)
-    start_time = time.time()
     processed_count = 0
     error_count = 0
-    video_processor: Optional[VideoProcessor] = None # Type hint
+    video_processor: Optional[VideoProcessor] = None
+    final_clip_list_all_videos = [] # Store all final paths for organizer
 
     status_callback("Status: Initializing clipping process...")
     try:
-        # Initialize VideoProcessor - may raise FFmpegNotFoundError or ValueError
-        print(f"CORE CLIP: Initializing VP (Output: {output_path})")
-        video_processor = VideoProcessor(output_path) # From utils.video_processor
-        print("CORE CLIP: VideoProcessor Initialized.")
-    except (FFmpegNotFoundError, ValueError) as e:
+        # Initialize VideoProcessor - PASS THE FOUND PATHS
+        logger.info(f"CORE CLIP: Initializing VideoProcessor (Output: {output_path})")
+        video_processor = VideoProcessor(output_path, ffmpeg_path=ffmpeg_exec, ffprobe_path=ffprobe_exec)
+        logger.info("CORE CLIP: VideoProcessor Initialized successfully.")
+
+    except (FFmpegNotFoundError, ValueError) as e: # Catch init errors
+         logger.critical(f"Failed to initialize VideoProcessor: {e}")
          status_callback(f"Error: {e}")
          completion_callback("Clipping", 0, total_videos, total_videos, processing_state)
          processing_state['active'] = False
          return
     except Exception as e: # Catch unexpected init errors
+        logger.critical(f"Unexpected error initializing VideoProcessor: {e}", exc_info=True)
         status_callback(f"Error: Could not initialize Video Processor: {e}")
-        traceback.print_exc()
         completion_callback("Clipping", 0, total_videos, total_videos, processing_state)
         processing_state['active'] = False
         return
 
     # --- Main Clipping Loop ---
     for index, file_path in enumerate(video_queue):
-        # Check stop flag before processing each video
-        # Needs to access the 'active' key within the mutable dict
+        # Check stop flag
         if not processing_state.get('active', True):
-             print("CORE CLIP: Stop signal received during queue processing.")
-             break # Exit the loop
+             logger.info("CORE CLIP: Stop signal received during queue processing.")
+             status_callback("Status: Stopping clipping process...")
+             break
 
         current_video_basename = os.path.basename(file_path)
         try:
             status_text = f"Clipping {index + 1}/{total_videos}: {current_video_basename}"
-            status_callback(status_text) # Call GUI update function via callback
-            print(f"CORE CLIP: Processing: {file_path}")
+            status_callback(status_text)
+            logger.info(f"CORE CLIP: Processing video {index + 1}/{total_videos}: {file_path}")
 
-            # Ensure video_processor is valid (should be from above init)
-            if not video_processor:
-                 raise RuntimeError("VideoProcessor instance is not valid.")
+            if not video_processor: raise RuntimeError("VideoProcessor instance became invalid.")
 
-            # Call the core video processing method from video_processor.py
-            # This method should contain its own detailed logging and error handling
-            processed_clips = video_processor.process_video(file_path, **options)
+            # Call VP which uses internal paths
+            processed_clips_for_this_video = video_processor.process_video(file_path, **options)
 
-            if isinstance(processed_clips, list) and processed_clips:
-                # Successfully processed this video (at least one clip was made)
+            if isinstance(processed_clips_for_this_video, list) and processed_clips_for_this_video:
                 processed_count += 1
-                print(f"CORE CLIP: Successfully processed {current_video_basename}.")
+                final_clip_list_all_videos.extend(processed_clips_for_this_video) # Collect final paths
+                logger.info(f"CORE CLIP: Successfully processed {current_video_basename}.")
+            elif isinstance(processed_clips_for_this_video, list) and not processed_clips_for_this_video:
+                 logger.warning(f"CORE CLIP: No valid clips generated for {current_video_basename}.")
             else:
-                # video_processor.process_video returned empty list or None, indicating failure
                 error_count += 1
-                print(f"CORE CLIP: Processing failed for {current_video_basename} (check video_processor logs).")
-                # Update status to reflect error for this specific file
+                logger.error(f"CORE CLIP: Processing failed for {current_video_basename} (check VP logs).")
                 status_callback(f"Error during clipping: {current_video_basename}")
 
-            progress_callback(index, total_videos, start_time) # Update progress based on index
+            progress_callback(index, total_videos, start_time) # Update progress
 
         except (VideoProcessingError, FileNotFoundError, ValueError) as e:
-             # Catch specific, potentially recoverable errors for this video
-             error_count += 1
-             error_msg = f"ERROR clipping {current_video_basename}"
-             print(error_msg + f": {type(e).__name__} - {e}")
-             status_callback(f"Error on: {current_video_basename} - {type(e).__name__}")
-             # Continue to the next video in the queue
+             error_count += 1; logger.error(f"ERROR clipping {current_video_basename}: {type(e).__name__} - {e}")
+             status_callback(f"Error on: {current_video_basename} - {type(e).__name__}"); progress_callback(index, total_videos, start_time)
+        except RuntimeError as e:
+             error_count +=1; logger.critical(f"Runtime error during clipping: {e}", exc_info=True); status_callback(f"Critical Error: {e}"); progress_callback(index, total_videos, start_time)
         except Exception as e:
-            # Catch unexpected errors during a specific video's processing
-            error_count += 1
-            error_msg = f"CRITICAL UNEXPECTED ERROR clipping {current_video_basename}"
-            print(error_msg + ":")
-            traceback.print_exc() # Print full stack trace
-            status_callback(f"Critical Error on: {current_video_basename}! Check console.")
-            # Continue to the next video
+            error_count += 1; logger.critical(f"CRITICAL UNEXPECTED ERROR clipping {current_video_basename}", exc_info=True)
+            status_callback(f"Critical Error processing {current_video_basename}! Check logs."); progress_callback(index, total_videos, start_time)
+    # --- End Clipping Loop ---
 
-    # --- Loop Finished or Stopped ---
-    was_stopped = not processing_state.get('active', True) # Check if stop was the reason loop ended
-    processing_state['active'] = False # Ensure flag is off after loop/break
-    # Call the completion callback (which uses root.after to update GUI)
+    was_stopped = not processing_state.get('active', True)
+    processing_state['active'] = False
+
+    # --- File Organization (AFTER loop, before completion callback) ---
+    organize_files = options.get("organize_output", False) # Get flag from options dict
+    if organize_files and processed_count > 0 and not was_stopped and file_manager_available:
+        logger.info(f"CORE CLIP: Organizing {len(final_clip_list_all_videos)} output files into date folders...")
+        status_callback("Status: Organizing output files...")
+        try:
+            # Organizer works on the base output directory
+            if os.path.isdir(output_path): # Ensure output path exists
+                 organizer = FileOrganizer(output_path)
+                 # This assumes FileOrganizer correctly handles files in the base dir
+                 organizer.organize_output(file_extensions=[".mp4", ".mp3"]) # Organize clips and maybe audio
+                 logger.info("CORE CLIP: File organization complete.")
+            else:
+                 logger.warning(f"CORE CLIP: Cannot organize files, output directory not found: {output_path}")
+        except Exception as org_e:
+            logger.error(f"CORE CLIP: Error during file organization: {org_e}", exc_info=True)
+            status_callback("Warning: Error organizing output files.") # Inform user via status
+    elif organize_files and processed_count == 0:
+         logger.info("CORE CLIP: Skipping file organization as no clips were successfully processed.")
+    elif organize_files and was_stopped:
+         logger.info("CORE CLIP: Skipping file organization as process was stopped.")
+    elif not file_manager_available:
+         logger.warning("CORE CLIP: FileOrganizer module not loaded, skipping organization.")
+    # --- End File Organization ---
+
+    logger.info(f"--- Clipping Queue Processing Finished. Success: {processed_count}, Errors: {error_count}, Total Attempted: {total_videos}, Stopped by user: {was_stopped} ---")
     completion_callback("Clipping", processed_count, error_count, total_videos, processing_state)
-    print(f"CORE CLIP: Clipping queue processing finished. Was stopped by user: {was_stopped}")
 
 
 # --- Gemini Script Generation Function ---
 def run_gemini_script_generation(prompt: str, completion_callback: ScriptCompletionCallback):
-    """
-    Generates a script using Gemini in a background thread.
-
-    Args:
-        prompt: The user's input prompt (niche/idea).
-        completion_callback: Function to call with (generated_script, error) upon completion.
-    """
+    """Generates a script using Gemini in a background thread."""
+    logger.info("--- Starting Gemini Script Generation Thread ---")
     if not utils_loaded or not ai_utils_available:
-         completion_callback(None, ImportError("AI utility module (ai_utils) not loaded."))
+         err = ImportError("AI utility module (ai_utils) not loaded.")
+         logger.error(f"Cannot generate script: {err}")
+         completion_callback(None, err)
          return
 
-    print(f"CORE AI SCRIPT: Starting generation for prompt: '{prompt[:50]}...'")
+    logger.info(f"CORE AI SCRIPT: Starting generation for prompt: '{prompt[:50]}...'")
     generated_script: Optional[str] = None
     error: Optional[Exception] = None
 
     try:
         # Call the actual Gemini generation function from utils.ai_utils
-        # This function handles API key config internally or raises GeminiError
         generated_script = generate_script_with_gemini(prompt) # Max length default used
 
         if generated_script:
-             print("CORE AI SCRIPT: Generation successful.")
+             logger.info("CORE AI SCRIPT: Generation successful.")
         else:
-             # Handle case where function returns None without explicit error
-             # Or Gemini might return empty string for safety/other reasons
+             # Handle case where function returns None or empty string without explicit error
              error = GeminiError("Gemini returned no script content.")
-             print("CORE AI SCRIPT: Generation returned empty script.")
+             logger.warning("CORE AI SCRIPT: Generation returned empty script or None.")
 
     except GeminiError as ge: # Catch specific errors from ai_utils
-        print(f"CORE AI SCRIPT: Gemini API Error: {ge}")
+        logger.error(f"CORE AI SCRIPT: Gemini API Error: {ge}")
         error = ge
+    except ValueError as ve: # Catch input errors like empty prompt
+         logger.error(f"CORE AI SCRIPT: Input error: {ve}")
+         error = ve
     except Exception as e: # Catch unexpected errors
-        print(f"CORE AI SCRIPT: Unexpected error during generation: {e}")
+        logger.critical("CORE AI SCRIPT: Unexpected error during generation:", exc_info=True)
         error = e
-        traceback.print_exc()
     finally:
+        logger.info("--- Gemini Script Generation Thread Finished ---")
         # Call the GUI callback (which uses root.after)
         completion_callback(generated_script, error)
-        print("CORE AI SCRIPT: Generation thread finished.")
 
 
-# --- NEW Gemini Metadata Generation Function ---
+# --- Gemini Metadata Generation Function ---
 def run_gemini_metadata_generation(metadata_type: str, context: str, count: int,
                                    completion_callback: MetadataCompletionCallback):
-    """
-    Generates hashtags, tags, or titles using Gemini in a background thread.
+    """Generates hashtags, tags, or titles using Gemini in a background thread."""
+    logger.info(f"--- Starting Gemini Metadata Generation Thread ({metadata_type}) ---")
+    valid_types = ['hashtags', 'tags', 'titles']
+    if metadata_type not in valid_types:
+        err = ValueError(f"Invalid metadata_type requested: {metadata_type}")
+        logger.error(err)
+        completion_callback(metadata_type, None, err)
+        return
 
-    Args:
-        metadata_type (str): 'hashtags', 'tags', or 'titles'.
-        context (str): The video topic/description provided by the user.
-        count (int): The desired number of items to generate.
-        completion_callback: Function to call with (type, result_list, error).
-    """
     if not utils_loaded or not ai_utils_available:
-         completion_callback(metadata_type, None, ImportError("AI utility module (ai_utils) not loaded."))
+         err = ImportError("AI utility module (ai_utils) not loaded.")
+         logger.error(f"Cannot generate {metadata_type}: {err}")
+         completion_callback(metadata_type, None, err)
          return
 
-    print(f"CORE AI META: Starting '{metadata_type}' generation for context: '{context[:50]}...' (Count: {count})")
+    logger.info(f"CORE AI META: Starting '{metadata_type}' generation for context: '{context[:50]}...' (Count: {count})")
     result_list: Optional[List[str]] = None
     error: Optional[Exception] = None
 
@@ -245,185 +329,170 @@ def run_gemini_metadata_generation(metadata_type: str, context: str, count: int,
             result_list = generate_tags_with_gemini(context, count)
         elif metadata_type == 'titles':
             result_list = generate_titles_with_gemini(context, count)
-        else:
-            # Should not happen if called correctly from GUI
-            raise ValueError(f"Invalid metadata_type requested: {metadata_type}")
 
-        if result_list is not None: # Check specifically for None, empty list is valid
-             print(f"CORE AI META: '{metadata_type}' generation successful.")
+        if result_list is not None: # Check specifically for None, empty list is valid success
+             logger.info(f"CORE AI META: '{metadata_type}' generation successful (Count: {len(result_list)}).")
         else:
              # Generation function returned None, likely indicating an error within it
              error = GeminiError(f"Gemini failed to generate {metadata_type} (check ai_utils logs).")
-             print(f"CORE AI META: Generation failed for {metadata_type}.")
+             logger.warning(f"CORE AI META: Generation function returned None for {metadata_type}.")
 
-    except GeminiError as ge: # Catch specific errors from ai_utils
-        print(f"CORE AI META: Gemini API Error ({metadata_type}): {ge}")
+    except GeminiError as ge: # Catch errors raised directly if API fails badly
+        logger.error(f"CORE AI META: Gemini API Error ({metadata_type}): {ge}")
         error = ge
     except ValueError as ve: # Catch invalid input errors (e.g., empty context)
-         print(f"CORE AI META: Input error for {metadata_type}: {ve}")
+         logger.error(f"CORE AI META: Input error for {metadata_type}: {ve}")
          error = ve
     except Exception as e: # Catch unexpected errors
-        print(f"CORE AI META: Unexpected error during {metadata_type} generation: {e}")
+        logger.critical(f"CORE AI META: Unexpected error during {metadata_type} generation:", exc_info=True)
         error = e
-        traceback.print_exc()
     finally:
+        logger.info(f"--- Gemini Metadata Generation Thread Finished ({metadata_type}) ---")
         # Call the GUI callback with type, result (list or None), and any error
         completion_callback(metadata_type, result_list, error)
-        print(f"CORE AI META: '{metadata_type}' generation thread finished.")
 
 
-# --- AI Short Generation Processing Function ---
+# --- AI Short Generation Processing Function (MODIFIED) ---
 def run_ai_short_generation(script_text: str, background_video_path: str, final_output_path: str,
                             temp_dir: str, ai_options: Dict[str, Any],
                             progress_callback: ProgressCallback, status_callback: StatusCallback,
                             completion_callback: ProcessingCompletionCallback, processing_state: Dict[str, bool]):
     """
     Orchestrates the AI Short Generation process. Runs in a thread.
-    Uses callbacks for GUI updates and checks processing_state['active'] for stops.
+    Finds FFmpeg/FFprobe paths, passes them to helper functions, and organizes output.
     """
-    if not utils_loaded: # Check if all needed utils loaded
-        status_callback("Error: Core processing or utility modules failed to load.")
-        completion_callback("AI Short Generation", 0, 1, 1, processing_state) # 1 total item (the short), 1 error
+    logger.info("--- Starting AI Short Generation Thread ---")
+    start_time = time.time() # Define start time early
+    # --- Find FFmpeg/FFprobe FIRST ---
+    ffmpeg_exec, ffprobe_exec = None, None
+    # Check required dependencies
+    required_utils = {"TTS": tts_available, "Subtitles": sub_utils_available, "Helpers": helpers_available, "Logger": logger_available}
+    missing_deps = [name for name, loaded in required_utils.items() if not loaded]
+    if missing_deps:
+        err_msg = f"Error: Cannot start AI Short Gen. Missing dependencies: {', '.join(missing_deps)}"
+        logger.critical(err_msg)
+        status_callback(err_msg)
+        completion_callback("AI Short Generation", 0, 1, 1, processing_state)
         processing_state['active'] = False
         return
 
-    start_time = time.time()
-    processed_count = 0 # Will be 1 on full success
-    error_count = 1 # Start assuming failure
-    total_steps = 5 # Define number of major steps for progress reporting
+    # Dependencies loaded, try finding executables
+    try:
+        conf_ffmpeg = ai_options.get("config_ffmpeg_path", None)
+        conf_ffprobe = ai_options.get("config_ffprobe_path", None)
+        ffmpeg_exec, ffprobe_exec = find_ffmpeg_executables(conf_ffmpeg, conf_ffprobe)
+        if not ffmpeg_exec or not ffprobe_exec:
+            raise FFmpegNotFoundError("FFmpeg or FFprobe executable not found for AI Short Gen. Check Settings.")
+    except FFmpegNotFoundError as e:
+         logger.critical(f"FFmpeg/FFprobe Check Failed for AI Short Gen: {e}")
+         status_callback(f"Error: {e}")
+         completion_callback("AI Short Generation", 0, 1, 1, processing_state)
+         processing_state['active'] = False
+         return
+    except Exception as e:
+         logger.critical(f"Unexpected error finding FFmpeg/FFprobe for AI Short Gen: {e}", exc_info=True)
+         status_callback("Error: Unexpected error finding FFmpeg/FFprobe.")
+         completion_callback("AI Short Generation", 0, 1, 1, processing_state)
+         processing_state['active'] = False
+         return
+    logger.info(f"AI Short Gen: Using FFmpeg='{ffmpeg_exec}', FFprobe='{ffprobe_exec}'")
+    # --- End FFmpeg Find ---
 
-    # Paths for intermediate files - ensure they are cleaned up
-    voice_audio_path: Optional[str] = None
-    temp_ass_file: Optional[str] = None
-    prepared_video_path: Optional[str] = None
+    processed_count = 0; error_count = 1; total_steps = 5
+    voice_audio_path: Optional[str] = None; temp_ass_file: Optional[str] = None; prepared_video_path: Optional[str] = None
+    timestamp = int(time.time()); random_id = random.randint(1000,9999)
 
     try:
-        # Check stop flag function (defined locally for this function)
+        # Check stop flag function
         def check_stop():
             if not processing_state.get('active', True):
-                raise InterruptedError("Stop requested by user.")
+                raise InterruptedError("Stop requested by user during AI short generation.")
 
         # Ensure temp_dir exists
         if not os.path.isdir(temp_dir):
-            try:
-                os.makedirs(temp_dir, exist_ok=True)
-            except OSError as e:
-                raise ValueError(f"Could not create temporary directory: {temp_dir} - {e}")
+            try: logger.info(f"CORE AI: Creating temporary directory: {temp_dir}"); os.makedirs(temp_dir, exist_ok=True)
+            except OSError as e: raise ValueError(f"Could not create temporary directory: {temp_dir} - {e}")
 
         # --- Step 1: TTS (Polly) ---
-        check_stop()
-        status_callback("Status: 1/5 Generating voiceover (AWS Polly)...")
-        print("CORE AI: Calling Polly TTS function...")
-        # This function needs to exist in tts_utils.py and handle errors internally or raise them
-        tts_result = generate_polly_tts_and_marks( # From utils.tts_utils
-            script_text, temp_dir, ai_options.get('polly_voice', 'Joanna')
-        )
+        check_stop(); status_callback("Status: 1/5 Generating voiceover..."); logger.info("CORE AI: Calling Polly TTS...")
+        tts_result = generate_polly_tts_and_marks(script_text, temp_dir, ai_options.get('polly_voice', 'Joanna'))
         # Check if TTS succeeded and returned valid data
         if tts_result is None or tts_result[0] is None or tts_result[1] is None:
-            raise ValueError("TTS generation failed or returned invalid data (check tts_utils logs/AWS setup).")
+            # Error should have been logged in tts_utils, raise specific error here
+            raise ValueError("TTS generation failed or returned invalid data (check logs/AWS setup).")
         voice_audio_path, parsed_speech_marks = tts_result
-        if not os.path.exists(voice_audio_path): # Double check file exists
-             raise FileNotFoundError(f"TTS audio file path returned but file not found: {voice_audio_path}")
-        print(f"CORE AI: Generated voiceover: {voice_audio_path}")
-        progress_callback(0, total_steps, start_time) # Step 1 complete (index 0)
+        if not os.path.exists(voice_audio_path): raise FileNotFoundError(f"TTS audio file not found: {voice_audio_path}")
+        logger.info(f"CORE AI: Generated voiceover: {voice_audio_path}"); progress_callback(0, total_steps, start_time)
 
         # --- Step 2: Get Audio Duration ---
-        check_stop()
-        status_callback("Status: 2/5 Getting audio duration...")
-        print("CORE AI: Getting audio duration...")
-        audio_duration = get_media_duration(voice_audio_path) # From utils.helpers
-        if audio_duration <= 0:
-            raise ValueError(f"Could not determine valid voiceover duration ({audio_duration:.2f}s).")
-        print(f"CORE AI: Voiceover duration: {audio_duration:.3f}s")
-        progress_callback(1, total_steps, start_time) # Step 2 complete (index 1)
+        check_stop(); status_callback("Status: 2/5 Getting audio duration..."); logger.info("CORE AI: Getting audio duration...")
+        audio_duration = get_media_duration(voice_audio_path, ffprobe_exec=ffprobe_exec) # Pass ffprobe path
+        if audio_duration <= 0: raise ValueError(f"Could not determine valid voiceover duration ({audio_duration:.2f}s).")
+        logger.info(f"CORE AI: Voiceover duration: {audio_duration:.3f}s"); progress_callback(1, total_steps, start_time)
 
         # --- Step 3: Generate ASS File ---
-        check_stop()
-        status_callback("Status: 3/5 Generating subtitle file...")
-        # Create unique filename for ASS file
-        timestamp = int(time.time())
-        random_id = random.randint(100,999)
-        temp_ass_filename = f"temp_subs_{timestamp}_{random_id}.ass"
-        temp_ass_file = os.path.join(temp_dir, temp_ass_filename)
-        print(f"CORE AI: Creating temp ASS: {temp_ass_file}")
-        ass_success = generate_ass_file_with_style( # From utils.subtitle_utils
-            parsed_speech_marks=parsed_speech_marks,
-            output_ass_path=temp_ass_file,
-            font_size=ai_options.get('font_size', 24)
-            # Pass other style args here
-        )
-        if not ass_success:
-            raise ValueError("Failed to generate ASS subtitle file (check subtitle_utils logs).")
-        print("CORE AI: Temp ASS file created.")
-        progress_callback(2, total_steps, start_time) # Step 3 complete (index 2)
+        check_stop(); status_callback("Status: 3/5 Generating subtitle file...")
+        temp_ass_filename = f"temp_subs_{timestamp}_{random_id}.ass"; temp_ass_file = os.path.join(temp_dir, temp_ass_filename)
+        logger.info(f"CORE AI: Creating temporary ASS file: {temp_ass_file}")
+        ass_success = generate_ass_file_with_style(parsed_speech_marks=parsed_speech_marks, output_ass_path=temp_ass_file, font_size=ai_options.get('font_size', 48))
+        if not ass_success: raise ValueError("Failed to generate ASS subtitle file (check logs).")
+        logger.info("CORE AI: Temp ASS file created."); progress_callback(2, total_steps, start_time)
 
         # --- Step 4: Prepare Background Video ---
-        check_stop()
-        status_callback("Status: 4/5 Preparing background video...")
-        prepared_video_path = os.path.join(temp_dir, f"prep_video_{timestamp}_{random_id}.mp4")
-        print(f"CORE AI: Preparing background video -> {prepared_video_path}")
-        prep_success = prepare_background_video(background_video_path, prepared_video_path, audio_duration) # From utils.helpers
-        if not prep_success:
-             raise ValueError("Failed to prepare background video (check helpers logs).")
-        print("CORE AI: Background video prepared.")
-        progress_callback(3, total_steps, start_time) # Step 4 complete (index 3)
+        check_stop(); status_callback("Status: 4/5 Preparing background video...")
+        prepared_video_filename = f"prep_video_{timestamp}_{random_id}.mp4"; prepared_video_path = os.path.join(temp_dir, prepared_video_filename)
+        logger.info(f"CORE AI: Preparing background video -> {prepared_video_path}")
+        prep_success = prepare_background_video(background_video_path, prepared_video_path, audio_duration, ffmpeg_exec=ffmpeg_exec, ffprobe_exec=ffprobe_exec) # Pass paths
+        if not prep_success: raise ValueError("Failed to prepare background video (check logs).")
+        logger.info("CORE AI: Background video prepared."); progress_callback(3, total_steps, start_time)
 
         # --- Step 5: Final FFmpeg Composition ---
-        check_stop()
-        status_callback("Status: 5/5 Combining final video...")
-        print("CORE AI: Combining final elements...")
-        bg_music = ai_options.get('background_music_path', None) # Get optional music path
-        music_vol = ai_options.get('music_volume', 0.1)        # Get optional music volume
-        combine_success = combine_ai_short_elements( # From utils.helpers
-            video_path=prepared_video_path,
-            audio_path=voice_audio_path,
-            ass_path=temp_ass_file,
-            output_path=final_output_path, # The final desired output path
-            bg_music_path=bg_music,
-            music_volume=music_vol
-        )
-        if not combine_success:
-             raise ValueError("Final FFmpeg composition failed (check helpers logs).")
-        print("CORE AI: Final combination successful.")
-        progress_callback(4, total_steps, start_time) # Step 5 complete (index 4)
+        check_stop(); status_callback("Status: 5/5 Combining final video..."); logger.info("CORE AI: Combining final elements...")
+        bg_music = ai_options.get('background_music_path', None); music_vol = ai_options.get('music_volume', 0.1)
+        combine_success = combine_ai_short_elements(video_path=prepared_video_path, audio_path=voice_audio_path, ass_path=temp_ass_file, output_path=final_output_path, ffmpeg_exec=ffmpeg_exec, bg_music_path=bg_music, music_volume=music_vol) # Pass ffmpeg path
+        if not combine_success: raise ValueError("Final FFmpeg composition failed (check logs).")
+        logger.info("CORE AI: Final combination successful."); progress_callback(4, total_steps, start_time)
 
         # If all steps succeeded
-        processed_count = 1
-        error_count = 0 # Reset error count
-        status_callback("Status: AI Short Generation Successful!")
-        print("CORE AI: Process completed successfully.")
+        processed_count = 1; error_count = 0; status_callback("Status: AI Short Generation Successful!"); logger.info("CORE AI: AI Short Generation process completed successfully.")
 
-    except InterruptedError: # Catch explicit stop request
-         print("CORE AI: Stop signal received during AI short generation.")
-         status_callback("Status: AI Short Generation Stopped.")
-         # Keep current processed/error counts (likely 0 processed, 1 error)
-    except (FFmpegNotFoundError, ValueError, FileNotFoundError, ConnectionError) as e: # Catch specific expected errors
-         error_msg = f"ERROR generating AI Short: {type(e).__name__} - {e}"
-         print(error_msg)
+        # --- File Organization (AFTER successful combination) ---
+        organize_ai_files = ai_options.get("organize_output", False) # Get flag from options
+        if organize_ai_files and file_manager_available: # Check module loaded
+            logger.info("CORE AI: Organizing final AI short output file...")
+            status_callback("Status: Organizing output file...")
+            try:
+                ai_output_dir = os.path.dirname(final_output_path)
+                if os.path.isdir(ai_output_dir): # Ensure output dir exists
+                    organizer = FileOrganizer(ai_output_dir)
+                    # Only organize the final MP4 for AI shorts
+                    organizer.organize_output(file_extensions=[".mp4"])
+                    logger.info("CORE AI: AI short file organization complete.")
+                else:
+                    logger.warning(f"CORE AI: Cannot organize AI short, output directory not found: {ai_output_dir}")
+            except Exception as org_e:
+                logger.error(f"CORE AI: Error during AI short file organization: {org_e}", exc_info=True)
+                status_callback("Warning: Error organizing AI short output file.")
+        elif not file_manager_available:
+             logger.warning("CORE AI: FileOrganizer module not loaded, skipping organization.")
+        # --- End File Organization ---
+
+    except InterruptedError as e:
+         logger.info(f"CORE AI: Stop signal received: {e}"); status_callback("Status: AI Short Generation Stopped.")
+    except (FFmpegNotFoundError, ValueError, FileNotFoundError, ConnectionError, GeminiError) as e: # Added GeminiError just in case
+         error_msg = f"ERROR generating AI Short: {type(e).__name__} - {e}"; logger.error(error_msg, exc_info=True)
          status_callback(f"Error: {e}")
-         traceback.print_exc()
-         # error_count remains 1
     except Exception as e:
-        error_msg = f"CRITICAL UNEXPECTED ERROR generating AI Short"
-        print(error_msg + ":")
-        traceback.print_exc()
-        status_callback("Critical Error! Check console.")
-        # error_count remains 1
+        error_msg = "CRITICAL UNEXPECTED ERROR generating AI Short"; logger.critical(error_msg, exc_info=True); status_callback("Critical Error generating AI Short! Check logs.")
     finally:
         # --- Cleanup Intermediate Files ---
-        files_to_clean = [temp_ass_file, voice_audio_path, prepared_video_path]
-        print(f"CORE AI: Cleaning up: {files_to_clean}")
+        files_to_clean = [temp_ass_file, voice_audio_path, prepared_video_path]; logger.info(f"CORE AI: Cleaning up temporary files...")
         for f_path in files_to_clean:
             if f_path and os.path.exists(f_path):
-                try:
-                    os.remove(f_path)
-                    print(f"CORE AI: Removed temporary file: {os.path.basename(f_path)}")
-                except OSError as e_clean:
-                    # Log warning but don't stop the completion callback
-                    print(f"CORE AI: Error removing temporary file {f_path}: {e_clean}")
-        # --- Signal Completion via Callback ---
-        was_stopped = not processing_state.get('active', True) # Check flag state
-        processing_state['active'] = False # Ensure flag is off
-        # Use process_type="AI Short Generation", total items = 1 short
+                try: os.remove(f_path); logger.info(f"CORE AI: Removed temp file: {os.path.basename(f_path)}")
+                except OSError as e_clean: logger.warning(f"CORE AI: Error removing temp file {f_path}: {e_clean}")
+            elif f_path: logger.debug(f"CORE AI: Temp file path not found for cleanup: {f_path}")
+        # --- Signal Completion ---
+        was_stopped = not processing_state.get('active', True); processing_state['active'] = False
+        logger.info(f"--- AI Short Generation Thread Finished. Success: {processed_count}, Errors: {error_count}, Stopped by user: {was_stopped} ---")
         completion_callback("AI Short Generation", processed_count, error_count, 1, processing_state)
-        print(f"CORE AI: AI Short generation finished. Was stopped by user: {was_stopped}")

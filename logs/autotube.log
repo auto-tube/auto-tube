@@ -2393,3 +2393,119 @@ Error opening output files: Invalid argument
 2025-04-04 18:27:14,284 - autotube - INFO - --- Autotube App Start --- Python Version: 3.13.2, OS: win32 ---
 2025-04-04 18:32:57,207 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
 2025-04-04 18:32:58,599 - autotube - INFO - --- Autotube App Start --- Python Version: 3.13.2, OS: win32 ---
+2025-04-04 21:07:21,324 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-04 21:07:23,025 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-04 21:07:23,026 - autotube - INFO - --- Autotube App Start --- Python Version: 3.13.2, OS: win32 ---
+2025-04-04 21:23:57,960 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-04 21:23:57,961 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-04 21:23:57,961 - autotube - INFO - --- Autotube App Start --- Python: 3.13.2, OS: win32 ---
+2025-04-04 21:23:58,013 - autotube - INFO - Root TkinterDnD window created.
+2025-04-04 21:23:58,013 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-04 21:23:58,014 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-04 21:23:58,014 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-04 21:23:58,014 - autotube - INFO - GUI: UI variables created.
+2025-04-04 21:23:58,015 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-04 21:23:58,015 - autotube - INFO - GUI: Config file not found. Using default variable values.
+2025-04-04 21:23:58,015 - autotube - INFO - GUI: Default output path set to: C:\Users\V0iD\Autotube_Output
+2025-04-04 21:23:58,016 - autotube - INFO - GUI: Configuring external APIs...
+2025-04-04 21:23:58,025 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-04 21:23:58,725 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-04 21:23:58,731 - autotube - INFO - GUI: Found potential paths: FFmpeg='C:\Users\V0iD\Downloads\ffmpeg-2025-03-27-git-114fccc4a5-full_build\bin\ffmpeg.EXE', FFprobe='C:\Users\V0iD\Downloads\ffmpeg-2025-03-27-git-114fccc4a5-full_build\bin\ffprobe.EXE'
+2025-04-04 21:23:59,190 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\Downloads\ffmpeg-2025-03-27-git-114fccc4a5-full_build\bin\ffprobe.EXE
+2025-04-04 21:23:59,224 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\Downloads\ffmpeg-2025-03-27-git-114fccc4a5-full_build\bin\ffmpeg.EXE
+2025-04-04 21:23:59,224 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-04 21:23:59,225 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-04 21:23:59,254 - autotube - INFO - GUI: Tabs added.
+2025-04-04 21:23:59,254 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-04 21:23:59,388 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-04 21:23:59,745 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-04 21:23:59,889 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-04 21:23:59,987 - autotube - INFO - GUI: All Tab content created.
+2025-04-04 21:23:59,990 - autotube - INFO - GUI: Status bar created.
+2025-04-04 21:23:59,990 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-04 21:23:59,990 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-04 21:23:59,991 - autotube - INFO - Starting application main event loop...
+2025-04-04 21:24:00,164 - autotube - WARNING - GUI CONFIG ISSUES DETECTED:
+- Google API Key missing or invalid (Settings Tab). AI features disabled.
+2025-04-04 21:24:22,761 - autotube - INFO - GUI: Close button clicked.
+2025-04-04 21:24:22,761 - autotube - INFO - GUI: Exiting application.
+2025-04-04 21:24:22,848 - autotube - INFO - Application main event loop finished.
+2025-04-04 21:24:22,849 - autotube - INFO - --- Autotube App End ---
+2025-04-04 21:29:08,777 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-04 21:29:08,777 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-04 21:29:08,777 - autotube - INFO - --- Autotube App Start --- Python: 3.13.2, OS: win32 ---
+2025-04-04 21:29:08,827 - autotube - INFO - Root TkinterDnD window created.
+2025-04-04 21:29:08,828 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-04 21:29:08,828 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-04 21:29:08,828 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-04 21:29:08,829 - autotube - INFO - GUI: UI variables created.
+2025-04-04 21:29:08,829 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-04 21:29:08,829 - autotube - INFO - GUI: Config file not found. Using default variable values.
+2025-04-04 21:29:08,829 - autotube - INFO - GUI: Default output path set to: C:\Users\V0iD\Autotube_Output
+2025-04-04 21:29:08,830 - autotube - INFO - GUI: Configuring external APIs...
+2025-04-04 21:29:08,842 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-04 21:29:09,550 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-04 21:29:09,551 - autotube - INFO - GUI: Found potential paths: FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-04 21:29:09,861 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-04 21:29:10,159 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-04 21:29:10,160 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-04 21:29:10,160 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-04 21:29:10,189 - autotube - INFO - GUI: Tabs added.
+2025-04-04 21:29:10,189 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-04 21:29:10,320 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-04 21:29:10,672 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-04 21:29:10,811 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-04 21:29:10,904 - autotube - INFO - GUI: All Tab content created.
+2025-04-04 21:29:10,907 - autotube - INFO - GUI: Status bar created.
+2025-04-04 21:29:10,907 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-04 21:29:10,908 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-04 21:29:10,908 - autotube - INFO - Starting application main event loop...
+2025-04-04 21:29:11,082 - autotube - WARNING - GUI CONFIG ISSUES DETECTED:
+- Google API Key missing or invalid (Settings Tab). AI features disabled.
+2025-04-04 21:35:18,837 - autotube - INFO - GUI: Close button clicked.
+2025-04-04 21:35:18,838 - autotube - INFO - GUI: Exiting application.
+2025-04-04 21:35:18,931 - autotube - INFO - Application main event loop finished.
+2025-04-04 21:35:18,931 - autotube - INFO - --- Autotube App End ---
+2025-04-04 22:10:04,385 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-04 22:10:04,385 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-04 22:10:04,386 - autotube - INFO - --- Autotube Application Start ---
+2025-04-04 22:10:04,386 - autotube - INFO - Python Version: 3.13.2
+2025-04-04 22:10:04,386 - autotube - INFO - Platform: Windows (10)
+2025-04-04 22:10:04,386 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-04 22:10:04,386 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-04 22:10:04,434 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-04 22:10:04,435 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-04 22:10:04,435 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-04 22:10:04,435 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-04 22:10:04,435 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-04 22:10:04,436 - autotube - INFO - GUI: UI variables created.
+2025-04-04 22:10:04,436 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-04 22:10:04,436 - autotube - INFO - GUI: Config file not found. Using default variable values.
+2025-04-04 22:10:04,436 - autotube - INFO - GUI: Default output path set to user's home directory: C:\Users\V0iD\Autotube_Output
+2025-04-04 22:10:04,437 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-04 22:10:04,437 - autotube - INFO - Using Google API Key from: Environment Variable
+2025-04-04 22:10:04,437 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-04 22:10:04,438 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-04 22:10:04,447 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-04 22:10:05,176 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-04 22:10:05,177 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-04 22:10:05,209 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-04 22:10:05,243 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-04 22:10:05,243 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-04 22:10:05,243 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-04 22:10:05,272 - autotube - INFO - GUI: Tabs added.
+2025-04-04 22:10:05,272 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-04 22:10:05,378 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-04 22:10:05,565 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-04 22:10:05,677 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-04 22:10:05,749 - autotube - INFO - GUI: All Tab content created.
+2025-04-04 22:10:05,751 - autotube - INFO - GUI: Status bar created.
+2025-04-04 22:10:05,752 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-04 22:10:05,752 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-04 22:10:05,752 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-04 22:10:05,760 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-04 22:10:05,935 - autotube - INFO - GUI: Initial configuration check passed.
+2025-04-04 22:11:11,820 - autotube - INFO - GUI: Window close requested.
+2025-04-04 22:11:11,821 - autotube - INFO - GUI: Exiting application.
+2025-04-04 22:11:11,915 - autotube - INFO - Tkinter main event loop finished.
+2025-04-04 22:11:11,916 - autotube - INFO - --- Autotube Application End ---
