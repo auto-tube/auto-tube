@@ -8,3 +8,4 @@ customtkinter
 tkinterdnd2
 scenedetect
 setuptools
+google-generativeai

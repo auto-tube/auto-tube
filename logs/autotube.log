@@ -2372,3 +2372,24 @@ Error opening output files: Invalid argument
 2025-03-30 20:48:25,514 - autotube - INFO - --- VP ProcessVideo Finish: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4. Final clips: 5 ---
 2025-03-30 20:53:24,803 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
 2025-03-30 20:53:25,518 - autotube - INFO - --- Autotube Application Start --- Python: 3.13.2, Platform: win32 ---
+2025-03-30 21:08:27,609 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-30 21:08:28,433 - autotube - INFO - --- Autotube Application Start --- Python: 3.13.2, Platform: win32 ---
+2025-03-31 09:12:07,076 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-31 09:12:07,898 - autotube - INFO - --- Autotube Application Start --- Python: 3.13.2, Platform: win32 ---
+2025-03-31 09:21:14,408 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-31 09:21:15,083 - autotube - INFO - --- Autotube Application Start --- Python: 3.13.2, Platform: win32 ---
+2025-03-31 09:46:47,751 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-31 09:46:48,459 - autotube - INFO - --- Autotube Application Start --- Python: 3.13.2, Platform: win32 ---
+2025-03-31 14:04:56,558 - autotube - INFO - --- Autotube App Start --- Py:3.13.2, OS:win32 ---
+2025-03-31 14:09:57,904 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-31 14:09:59,661 - autotube - INFO - --- Autotube App Start --- Py:3.13.2, OS:win32 ---
+2025-03-31 15:44:49,533 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-31 15:44:50,960 - autotube - INFO - --- Autotube App Start --- Py:3.13.2, OS:win32 ---
+2025-03-31 16:11:22,934 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-31 16:11:24,321 - autotube - INFO - --- Autotube App Start --- Py:3.13.2, OS:win32 ---
+2025-03-31 17:46:23,529 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-03-31 17:46:24,994 - autotube - INFO - --- Autotube App Start --- Py:3.13.2, OS:win32 ---
+2025-04-04 18:27:12,157 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-04 18:27:14,284 - autotube - INFO - --- Autotube App Start --- Python Version: 3.13.2, OS: win32 ---
+2025-04-04 18:32:57,207 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-04 18:32:58,599 - autotube - INFO - --- Autotube App Start --- Python Version: 3.13.2, OS: win32 ---
