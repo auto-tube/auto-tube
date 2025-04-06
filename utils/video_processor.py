@@ -1,645 +1,637 @@
 # utils/video_processor.py
-import os
-import random
-# import cv2 # Only needed if using _video_capture context manager
-# import numpy as np # Only needed if using _video_capture context manager
-import ffmpeg
-from typing import List, Optional, Tuple
-from contextlib import contextmanager
-from .logger_config import setup_logging # Relative import within package
-import scenedetect
-from scenedetect.video_manager import VideoManager
-from scenedetect.detectors import ContentDetector
-from scenedetect.scene_manager import SceneManager
-from scenedetect import FrameTimecode # Import FrameTimecode
-import traceback
-import sys # For platform check
-import subprocess # For direct ffmpeg/ffprobe check in _check_ffmpeg only
-import shutil # Added for shutil.which
 
-logger = setup_logging() # Initialize logger for this module
+import os
+import subprocess
+import json
+import logging
+import time
+import math
+import sys # Needed for sys.platform
+import traceback # Import traceback
+from typing import Optional, Tuple, List, Dict, Any
+
+# Try importing ffmpeg-python
+FFMPEG_PYTHON_AVAILABLE = False
+try:
+    import ffmpeg
+    FFMPEG_PYTHON_AVAILABLE = True
+except ImportError:
+    # Use print for immediate feedback if logger isn't set up yet during import
+    print("ERROR [video_processor]: ffmpeg-python library not found. Install using: pip install ffmpeg-python")
+    print("ERROR [video_processor]: Video filtering (including vertical cropping) will NOT work.")
+    # Define dummy ffmpeg module if needed, although errors will likely occur later
+    class FFmpegDummy:
+        def input(self, *args, **kwargs): raise ImportError("ffmpeg-python not available")
+        def output(self, *args, **kwargs): raise ImportError("ffmpeg-python not available")
+        def probe(self, *args, **kwargs): raise ImportError("ffmpeg-python not available")
+        # Define dummy Error class that subclasses Exception for broader catching
+        class Error(Exception): pass
+    ffmpeg = FFmpegDummy() # Assign dummy
+
+# --- Scenedetect Imports ---
+scenedetect_available = False
+try:
+    # Core components
+    from scenedetect import open_video, SceneManager, StatsManager
+    # Available detectors
+    from scenedetect.detectors import ContentDetector # Most common
+    # Corrected exception import (based on the error message)
+    from scenedetect.stats_manager import StatsFileCorrupt
+    # FrameTimecode for time calculations
+    from scenedetect import FrameTimecode
+    scenedetect_available = True
+except ImportError:
+    print("WARNING [video_processor]: PySceneDetect library not found. Scene detection features will be unavailable.")
+    print("Install using: pip install scenedetect[opencv]")
+    # Define dummy classes/exceptions if scenedetect is missing
+    class FrameTimecode:
+        def __init__(self, timecode, fps): pass
+        def get_seconds(self): return 0.0
+    class SceneManager: pass
+    class StatsManager: pass
+    class ContentDetector: pass
+    class StatsFileCorrupt(Exception): pass # Define dummy exception
+    def open_video(*args, **kwargs):
+        raise ImportError("PySceneDetect not available")
+
+# --- Custom Exceptions ---
+class FFmpegNotFoundError(Exception):
+    """Custom exception for when FFmpeg/FFprobe is not found or fails verification."""
+    pass
 
 class VideoProcessingError(Exception):
-    """Custom exception for video processing errors."""
+    """Custom exception for general errors during video processing."""
     pass
 
-class FFmpegNotFoundError(Exception):
-    """Exception raised when FFmpeg is not found or configured correctly."""
-    pass
-
+# --- VideoProcessor Class ---
 class VideoProcessor:
-    """
-    Handles low-level video processing tasks using FFmpeg and Scenedetect
-    for individual video files. Focused on clipping and basic transformations.
-    Requires valid paths to ffmpeg and ffprobe executables upon initialization.
-    """
+    """Handles video processing tasks like clipping (with vertical formatting) and scene detection."""
 
-    def __init__(self, output_folder: str, ffmpeg_path: Optional[str], ffprobe_path: Optional[str]): # Added paths to init
+    def __init__(self, output_dir: str, ffmpeg_path: str = 'ffmpeg', ffprobe_path: str = 'ffprobe', logger: Optional[logging.Logger] = None):
         """
-        Initialize the VideoProcessor. Checks output folder and FFmpeg availability.
+        Initializes the VideoProcessor.
 
         Args:
-            output_folder (str): The base directory where output files will be saved.
-            ffmpeg_path (Optional[str]): Full path to the FFmpeg executable.
-            ffprobe_path (Optional[str]): Full path to the FFprobe executable.
+            output_dir: The base directory where processed clips will be saved.
+            ffmpeg_path: Path to the FFmpeg executable. Defaults to 'ffmpeg'.
+            ffprobe_path: Path to the FFprobe executable. Defaults to 'ffprobe'.
+            logger: An optional logger instance. If None, a default logger is created.
 
         Raises:
-            ValueError: If the output folder is invalid or cannot be created.
-            FFmpegNotFoundError: If the provided FFmpeg/FFprobe paths are invalid or executables cannot be verified.
+            FFmpegNotFoundError: If FFmpeg or FFprobe cannot be found or verified.
+            ValueError: If the output directory cannot be created.
         """
-        if not output_folder or not isinstance(output_folder, str):
-             raise ValueError("VP Init: Invalid output folder path provided.")
-        try:
-            # Ensure output folder exists
-            if not os.path.isdir(output_folder):
-                logger.info(f"VP Init: Output folder '{output_folder}' not found. Creating.")
-                os.makedirs(output_folder, exist_ok=True)
-            self.output_folder = output_folder
-            logger.debug(f"VP Init: Output folder set to: {self.output_folder}")
-        except OSError as e:
-            # Wrap OS error in a more specific ValueError
-            raise ValueError(f"VP Init: Output folder '{output_folder}' could not be created: {e}")
-
-        # Store paths and perform the check during initialization
+        self.output_dir = output_dir
         self.ffmpeg_path = ffmpeg_path
         self.ffprobe_path = ffprobe_path
-        self._check_ffmpeg() # This will raise FFmpegNotFoundError if paths are invalid
 
-    def _check_ffmpeg(self):
-        """Checks if FFprobe/FFmpeg are accessible via stored paths using subprocess."""
-        # Use self.ffprobe_path and self.ffmpeg_path now
-        for exe_path, name in [(self.ffprobe_path, "FFprobe"), (self.ffmpeg_path, "FFmpeg")]:
-            logger.debug(f"VP Check: Verifying {name} at provided path: {exe_path}")
-            if not exe_path or not os.path.isfile(exe_path):
-                 # Log if not found via PATH either for context
-                 path_check = shutil.which(name.lower())
-                 if path_check:
-                     logger.warning(f"VP Check: {name} found via PATH at '{path_check}', but provided path '{exe_path}' is invalid or missing.")
-                 else:
-                     logger.error(f"VP Check: {name} not found via PATH either.")
-                 # Raise error based on the invalid provided path
-                 raise FFmpegNotFoundError(f"{name} executable path provided ('{exe_path}') is invalid or the file was not found.")
+        # Use provided logger or set up a basic one
+        if logger:
+            self.logger = logger
+        else:
+            logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            self.logger = logging.getLogger(__name__)
 
-            # Run the executable with -version flag to verify it runs
-            try:
-                cmd = [exe_path, "-version"]
-                # Use CREATE_NO_WINDOW on Windows to prevent flashing console
-                creationflags = subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
-                # Run the command, capture output, don't check return code immediately
-                result = subprocess.run(cmd, capture_output=True, text=True, check=False,
-                                        encoding='utf-8', errors='replace', creationflags=creationflags)
+        self.logger.info(f"VideoProcessor initialized. Output Dir Target: '{self.output_dir}'")
+        self.logger.info(f"Using potential FFmpeg path: '{self.ffmpeg_path}'")
+        self.logger.info(f"Using potential FFprobe path: '{self.ffprobe_path}'")
 
-                # Combine stdout and stderr for version check (sometimes in stderr)
-                version_info = (result.stdout or "") + (result.stderr or "")
-                version_info = version_info.strip()
+        # Verify FFmpeg/FFprobe paths immediately
+        self.logger.info(f"VideoProcessor attempting to verify FFmpeg: '{self.ffmpeg_path}'")
+        if not self._verify_executable(self.ffmpeg_path):
+            raise FFmpegNotFoundError(f"FFmpeg executable not found or verification failed at: {self.ffmpeg_path}")
+        else:
+             self.logger.info(f"Verification PASSED for FFmpeg.")
 
-                # Check if expected version string fragment exists
-                if f"{name.lower()} version" not in version_info.lower():
-                     # If the command failed AND version info is missing, it's definitely an error
-                     if result.returncode != 0:
-                          error_detail = f"Exit code {result.returncode}. Output: {version_info[:500]}{'...' if len(version_info)>500 else ''}"
-                          logger.error(f"VP Check: Failed to execute {name} at '{exe_path}'. {error_detail}")
-                          raise FFmpegNotFoundError(f"Failed to execute {name} at '{exe_path}'. {error_detail}")
-                     else:
-                          # Command ran successfully (exit code 0) but output didn't contain "version"?
-                          # This is unusual but might happen with custom builds. Log a warning but proceed.
-                          logger.warning(f"VP Check: {name} ran successfully at '{exe_path}' but expected version string was not found in output. Assuming OK.")
-                else:
-                    # Found version string, log success
-                    logger.info(f"VP Check: {name} check successful using provided path: {exe_path}")
+        self.logger.info(f"VideoProcessor attempting to verify FFprobe: '{self.ffprobe_path}'")
+        if not self._verify_executable(self.ffprobe_path):
+            raise FFmpegNotFoundError(f"FFprobe executable not found or verification failed at: {self.ffprobe_path}")
+        else:
+             self.logger.info(f"Verification PASSED for FFprobe.")
 
-            except (FileNotFoundError, PermissionError) as e:
-                # These errors typically mean the path is wrong or permissions are denied
-                logger.error(f"VP Check: Failed to find or execute {name} due to OS error at '{exe_path}': {e}")
-                raise FFmpegNotFoundError(f"Failed to find or execute {name} at '{exe_path}': {e}")
-            except Exception as e:
-                # Catch any other unexpected exceptions during the check
-                logger.error(f"VP Check: Unexpected error during {name} check using path '{exe_path}': {e}")
-                traceback.print_exc()
-                raise FFmpegNotFoundError(f"Unexpected error during {name} check ('{exe_path}'): {e}")
-
-    # --- Duration ---
-    def get_video_duration(self, video_path: str) -> float:
-        """Gets video duration in seconds using FFprobe via ffmpeg-python."""
-        clean_path = str(video_path).strip('"')
-        if not os.path.isfile(clean_path):
-            logger.error(f"VP Get Duration: File not found: {clean_path}")
-            return 0.0
-        # Use the stored ffprobe path
-        if not self.ffprobe_path:
-             logger.error("VP Get Duration: FFprobe path not configured in VideoProcessor.")
-             # Raise error as this is required
-             raise FFmpegNotFoundError("FFprobe path is required but not configured.")
-             # return 0.0
+        # Ensure output directory exists
         try:
-            logger.debug(f"VP Get Duration: Probing: {clean_path} using {self.ffprobe_path}")
-            # Use self.ffprobe_path here
-            probe_result = ffmpeg.probe(clean_path, cmd=self.ffprobe_path)
-            duration = float(probe_result["format"]["duration"])
-            logger.debug(f"VP Get Duration: Duration found: {duration:.3f}s")
-            return duration
-        except ffmpeg.Error as e:
-            stderr = e.stderr.decode('utf-8', errors='replace') if e.stderr else "N/A"
-            logger.error(f"VP Get Duration: FFprobe error for {clean_path}: {stderr}")
-            return 0.0 # Return 0.0 on probe error, could be invalid file
-        except (KeyError, ValueError, TypeError) as e:
-            logger.error(f"VP Get Duration: Error parsing duration from FFprobe output for {clean_path}: {e}")
-            return 0.0 # Return 0.0 on parsing error
-        except Exception as e:
-            logger.error(f"VP Get Duration: Unexpected error for {clean_path}: {e}")
-            traceback.print_exc()
-            return 0.0
-
-    # --- Validation/Calculation Helpers ---
-    def _validate_clip_length_range(self, min_length: int, max_length: int) -> Tuple[int, int]:
-        """Validates and returns the clip length range."""
-        if not isinstance(min_length, int) or not isinstance(max_length, int):
-             raise TypeError("Clip lengths must be integers.")
-        if min_length <= 0 or max_length <= 0:
-             raise ValueError("Clip lengths must be positive.")
-        if min_length > max_length:
-            raise ValueError("Minimum clip length cannot be greater than maximum clip length.")
-        return (min_length, max_length)
-
-    def _determine_clip_count(self, clip_count: int, duration: float,
-                               min_length: int, max_length: int) -> int:
-        """Calculates the number of clips, ensuring it's reasonable."""
-        if not isinstance(clip_count, int) or clip_count <= 0:
-            logger.warning(f"Invalid clip_count '{clip_count}', defaulting to 1.")
-            clip_count = 1
-        if duration <= 0:
-            logger.warning("Video duration is zero or negative, cannot determine clip count.")
-            return 0
-        if duration < min_length:
-            logger.info(f"Video duration ({duration:.2f}s) is less than minimum clip length ({min_length}s). No clips possible.")
-            return 0
-        # Return at least 1, but don't exceed the requested count
-        return max(1, clip_count)
-
-    # --- Scene Detection ---
-    def detect_scene_transition(self, video_path: str, start_time: float, threshold: float) -> float:
-        """Detects the next scene transition after start_time using Scenedetect."""
-        clean_path = str(video_path).strip('"')
-        logger.info(f"VP SceneDetect: Analyzing '{os.path.basename(clean_path)}' after {start_time:.2f}s (thr={threshold})")
-        video_manager = None
-        try:
-            if not os.path.isfile(clean_path):
-                 logger.error(f"VP SceneDetect: File not found: {clean_path}")
-                 return start_time # Return original start time if file missing
-
-            # --- Initialize Scenedetect Components ---
-            # Consider passing ffprobe path if VideoManager can use it
-            video_manager = VideoManager([clean_path])
-            scene_manager = SceneManager()
-            # Add ContentDetector with the specified threshold
-            scene_manager.add_detector(ContentDetector(threshold=threshold))
-
-            # Improve performance by downscaling before analysis
-            video_manager.set_downscale_factor(integer=True) # Auto-downscale
-            # Start the video manager (opens the video file)
-            video_manager.start()
-            # Get the base timecode (required for accurate timestamp conversion)
-            base_timecode = video_manager.get_base_timecode()
-            if not base_timecode:
-                 raise VideoProcessingError("Could not get base timecode from video manager.")
-
-            # Set the start time for detection
-            start_frame = base_timecode.get_frames() + int(start_time * base_timecode.get_framerate())
-            video_manager.seek(start_frame) # Seek to the frame corresponding to start_time
-
-            # Perform scene detection
-            # show_progress=False prevents console output from scenedetect
-            scene_manager.detect_scenes(frame_source=video_manager, show_progress=False)
-
-            # Get the list of scenes detected (tuples of start/end FrameTimecode objects)
-            # Only get scenes *after* the seek point
-            scene_list = scene_manager.get_scene_list(base_timecode, start_time=start_time) # Use start_time filter
-
-            # Find the first scene transition *after* the given start_time
-            if scene_list:
-                logger.debug(f"VP SceneDetect: Found {len(scene_list)} potential scenes after {start_time:.2f}s.")
-                # scene_list is sorted; the first element's start is the earliest transition
-                first_transition_timecode, _ = scene_list[0]
-                scene_start_sec = first_transition_timecode.get_seconds()
-
-                # Ensure the detected transition is actually *after* the requested start time (with a small buffer)
-                if scene_start_sec > (start_time + 0.1):
-                    logger.info(f"VP SceneDetect: Next transition found at {scene_start_sec:.2f}s")
-                    return scene_start_sec
-                else:
-                    # Detected scene might start exactly at or before our start_time due to seeking/timing
-                    logger.info("VP SceneDetect: Detected scene starts too close to current start time. No suitable *next* transition found.")
+            if self.output_dir and self.output_dir != ".":
+                os.makedirs(self.output_dir, exist_ok=True)
+                self.logger.info(f"Output directory ensured: '{self.output_dir}'")
             else:
-                logger.info("VP SceneDetect: No scenes detected after the specified start time.")
+                self.logger.debug(f"Skipping output directory creation for placeholder: '{self.output_dir}'")
+        except OSError as e:
+            self.logger.error(f"Failed to create output directory '{self.output_dir}': {e}")
+            raise ValueError(f"Could not create output directory: {e}")
 
-        except scenedetect.stats_manager.StatsFileCorruptError as e:
-             # Handle potential error if using stats files (not default here)
-             logger.warning(f"VP SceneDetect: Stats file error (if used): {e}.")
-        except Exception as e:
-            logger.error(f"VP SceneDetect: Error processing {os.path.basename(clean_path)}: {e}")
-            traceback.print_exc()
-        finally:
-            # Ensure the video file is released
-            if video_manager:
-                video_manager.release()
+    def _verify_executable(self, exec_path: str) -> bool:
+        """Checks if the given path is an executable file using -version."""
+        self.logger.debug(f"_verify_executable called for: {exec_path}")
 
-        # Fallback: return the original start time if no suitable transition found
-        return start_time
-
-    # --- FFmpeg Command Runner ---
-    def _run_ffmpeg_command(self, stream, operation_name="FFmpeg operation") -> bool:
-        """Helper to run ffmpeg-python command using configured FFMPEG_PATH."""
-        # Use the stored ffmpeg path
-        if not self.ffmpeg_path:
-             logger.error(f"VP Execute: FFmpeg path not configured for {operation_name}.")
+        if not exec_path:
+             self.logger.error("_verify_executable failed: exec_path is None or empty.")
              return False
-        try:
-            # Compile the command using the stored self.ffmpeg_path
-            cmd_list = stream.compile(cmd=self.ffmpeg_path, overwrite_output=True)
-            logger.debug(f"VP Execute: Running for {operation_name}: {' '.join(cmd_list)}")
-
-            # Execute the command using stored self.ffmpeg_path
-            # Pass cmd= here to ensure the correct executable is used by stream.run()
-            stdout, stderr = stream.run(cmd=self.ffmpeg_path, capture_stdout=True, capture_stderr=True, overwrite_output=True)
-
-            stderr_str = stderr.decode('utf-8', errors='replace').strip()
-            if stderr_str:
-                 # Crude check for 'warning' vs 'error' vs informational output
-                 log_level_func = logger.debug # Default to debug for general output
-                 if "error" in stderr_str.lower(): log_level_func = logger.error
-                 elif "warning" in stderr_str.lower(): log_level_func = logger.warning
-                 log_level_func(f"{operation_name} FFmpeg output:\n{stderr_str[:1000]}{'...' if len(stderr_str)>1000 else ''}")
-
-            return True # Indicate command executed without ffmpeg.Error exception
-
-        except ffmpeg.Error as e:
-            # ffmpeg-python raises this if FFmpeg returns a non-zero exit code
-            stderr_output = e.stderr.decode('utf-8', errors='replace') if e.stderr else "No stderr available"
-            logger.error(f"VP Execute: FFmpeg error during {operation_name}:\n{stderr_output}")
-            return False # Indicate failure
-        except Exception as e:
-            logger.error(f"VP Execute: Unexpected error running {operation_name}: {e}")
-            traceback.print_exc()
+        if not isinstance(exec_path, str):
+             self.logger.error(f"_verify_executable failed: exec_path is not a string ({type(exec_path)}). Value: {exec_path}")
+             return False
+        if not os.path.isfile(exec_path):
+            self.logger.error(f"_verify_executable failed: Path is not a file: {exec_path}")
             return False
 
-    # --- Core Clipping & Post-Processing ---
-    def process_video(
-        self,
-        video_path: str,
-        clip_count: int = 3,
-        min_clip_length: int = 15,
-        max_clip_length: int = 45,
-        scene_detect: bool = False,
-        scene_threshold: float = 30.0,
-        remove_audio: bool = False,
-        extract_audio: bool = False,
-        vertical_crop: bool = False,
-        mirror: bool = False,
-        enhance: bool = False,
-    ) -> List[str]:
-        """
-        Clips video based on parameters, applies selected post-processing.
-        Returns a list of paths to the final processed clip files.
-        """
-        logger.info(f"--- VP ProcessVideo Start: {os.path.basename(video_path)} ---")
-        opts_str = (f"clips={clip_count}, len={min_clip_length}-{max_clip_length}s, "
-                    f"scene={scene_detect}({scene_threshold}), crop={vertical_crop}, "
-                    f"mirror={mirror}, enhance={enhance}, rm_audio={remove_audio}, "
-                    f"ext_audio={extract_audio}")
-        logger.info(f"VP Options: {opts_str}")
-
-        clean_video_path = str(video_path).strip('"')
-        initial_clip_paths = [] # Store paths of initially clipped files
-        final_output_paths = [] # Store paths of final files after post-processing
-        intermediate_files = set() # Keep track of files created during post-processing
-
+        cmd = [exec_path, "-version"]
+        self.logger.debug(f"_verify_executable running command: {' '.join(cmd)}")
         try:
-            # Use the instance method to get duration (which uses configured ffprobe path)
-            duration = self.get_video_duration(clean_video_path)
-            if duration <= 0:
-                 # get_video_duration logs errors, just raise specific error here
-                 raise VideoProcessingError(f"Could not get valid duration ({duration:.2f}s) for {os.path.basename(video_path)}")
+            process = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                     check=False, text=True, encoding='utf-8', errors='ignore', timeout=10)
+            output = process.stdout.lower() + process.stderr.lower()
+            self.logger.debug(f"_verify_executable command finished. Return Code: {process.returncode}. Output length: {len(output)}")
+            self.logger.debug(f"_verify_executable Output Snippet:\n{output[:500]}{'...' if len(output)>500 else ''}")
 
-            # Validate clip length and determine number of clips
-            min_len, max_len = self._validate_clip_length_range(min_clip_length, max_clip_length)
-            num_clips_to_make = self._determine_clip_count(clip_count, duration, min_len, max_len)
+            is_ffmpeg = "ffmpeg version" in output
+            is_ffprobe = "ffprobe version" in output
 
-            if num_clips_to_make == 0:
-                logger.info(f"VP Clip: No clips possible based on duration and settings for {os.path.basename(video_path)}.")
-                return [] # Return empty list if no clips can be made
-
-            logger.info(f"VP Details: Duration={duration:.2f}s, Target clips={num_clips_to_make}")
-
-            start_time_sec = 0.0 # Start time for the next potential clip
-            clip_success_count = 0 # Number of clips successfully created so far
-
-            # --- Clipping Loop ---
-            # Continue until we have the desired number of successful clips
-            while clip_success_count < num_clips_to_make:
-                current_attempt_index = len(initial_clip_paths) # Track total attempts
-                logger.info(f"--- VP Clip Attempt {current_attempt_index + 1} (Target {clip_success_count + 1}/{num_clips_to_make}) ---")
-
-                # Check if remaining duration is too short for even the minimum clip length
-                min_time_needed = 1.0 # Need at least a small buffer
-                if start_time_sec >= duration - min_time_needed:
-                    logger.info(f"VP Clip: Remaining duration ({duration - start_time_sec:.2f}s) too short. Stopping clip generation.")
-                    break # Exit the loop if not enough time left
-
-                # Determine Actual Start Time (Adjust if scene detection enabled)
-                actual_start_time = start_time_sec
-                if scene_detect:
-                    # Find the next scene transition *after* the current start_time_sec
-                    detected_start = self.detect_scene_transition(clean_video_path, start_time_sec, scene_threshold)
-                    # Use the detected start only if it's significantly after the current start
-                    # and leaves enough time for a minimum length clip
-                    if detected_start > (start_time_sec + 0.1) and detected_start < duration - min_time_needed:
-                        logger.info(f"VP Clip: Scene Detect adjusted start from {start_time_sec:.2f}s to {detected_start:.2f}s")
-                        actual_start_time = detected_start
-                    else:
-                        logger.info(f"VP Clip: Scene Detect did not find a suitable later start point near {start_time_sec:.2f}s.")
-
-                # Final check if adjusted start time is still valid
-                if actual_start_time >= duration - min_time_needed:
-                    logger.warning(f"VP Clip: Adjusted start time {actual_start_time:.2f}s is too close to video end. Stopping clip generation.")
-                    break
-
-                # Determine Clip Duration for this attempt
-                max_possible_duration = duration - actual_start_time
-                # Clip length cannot exceed max_len or the remaining video duration
-                current_max_len = min(max_len, int(max_possible_duration))
-                # Min length cannot be less than 1 or more than the adjusted max
-                current_min_len = max(1, min(min_len, current_max_len))
-
-                # Check if a valid duration range exists
-                if current_min_len > current_max_len :
-                     logger.warning(f"VP Clip: Invalid calculated length range ({current_min_len}-{current_max_len}s) at start {actual_start_time:.2f}s. Advancing start time.")
-                     start_time_sec = actual_start_time + 1.0 # Advance slightly to avoid getting stuck
-                     continue # Skip to the next attempt
-
-                # Choose a random duration within the valid range
-                clip_duration_sec = random.randint(current_min_len, current_max_len)
-                logger.info(f"VP Clip {clip_success_count + 1}: Start={actual_start_time:.2f}s, Duration={clip_duration_sec:.2f}s")
-
-                # --- Define Output Path for this specific clip ---
-                base_name = os.path.basename(clean_video_path)
-                name, _ = os.path.splitext(base_name)
-                # Use a temporary suffix initially? Or just the final name pattern?
-                # Using the final pattern seems okay if cleanup handles intermediates.
-                clip_output_filename = f"{name}_clip_{clip_success_count + 1}.mp4"
-                clip_output_path = os.path.join(self.output_folder, clip_output_filename)
-
-                # --- FFmpeg Clipping Command using ffmpeg-python ---
-                try:
-                    logger.debug("VP Clip: Building ffmpeg clipping command...")
-                    # Input stream with start time (ss) and duration (t)
-                    # Using -ss before -i is faster for keyframe seeking but less precise.
-                    # Using -ss after -i (in input()) is precise but slower. Let's prioritize precision.
-                    input_stream = ffmpeg.input(clean_video_path, ss=actual_start_time, t=clip_duration_sec)
-
-                    # Output parameters: Copy codecs initially for speed, handle audio removal
-                    output_params = {
-                        'c:v': 'copy',          # Copy video codec (fastest)
-                        'c:a': 'copy',          # Copy audio codec
-                        'map_metadata': '-1',   # Remove global metadata
-                        'map_chapters': -1,     # Remove chapters
-                        'avoid_negative_ts': 'make_zero' # Handle potential timestamp issues
-                    }
-                    if remove_audio:
-                        logger.debug("VP Clip: Audio removal requested for initial clip.")
-                        del output_params['c:a'] # Remove audio copy
-                        output_params['an'] = None # Add flag to disable audio
-
-                    # Create the output node
-                    stream = ffmpeg.output(input_stream, clip_output_path, **output_params)
-
-                    logger.debug("VP Clip: Executing ffmpeg clipping command...")
-                    # Run the command using the helper which uses configured ffmpeg path
-                    if self._run_ffmpeg_command(stream, f"Clip {clip_success_count + 1}"):
-                        # Verify the output file was created and has content
-                        if os.path.exists(clip_output_path) and os.path.getsize(clip_output_path) > 100: # Basic size check
-                             initial_clip_paths.append(clip_output_path)
-                             logger.info(f"VP Clip: Successfully created initial clip: {clip_output_filename}")
-                             clip_success_count += 1 # Increment success count ONLY if clip is valid
-                        else:
-                             logger.error(f"VP Clip: FFmpeg reported success but output missing/empty: {clip_output_path}")
-                             if os.path.exists(clip_output_path):
-                                 try: os.remove(clip_output_path) # Clean up empty file
-                                 except OSError: pass
-                             # Do not increment success count, try again from next position
-                    else:
-                         logger.error(f"VP Clip: FFmpeg failed for clip {clip_success_count + 1}.")
-                         # Do not increment success count, try again from next position
-
-                except Exception as clip_e:
-                    logger.error(f"VP Clip: Error during clip {clip_success_count + 1} setup/run: {clip_e}")
-                    traceback.print_exc()
-                    # Do not increment success count, try again from next position
-
-                # --- Update Start Time for Next Clip Attempt ---
-                # Advance start time based on the end of the *attempted* clip,
-                # regardless of success/failure, to avoid retrying the same segment.
-                # Add a small buffer (e.g., 1 second) to prevent potential overlap issues.
-                start_time_sec = actual_start_time + clip_duration_sec + 1.0
-            # --- End Clipping Loop ---
-
-            # --- Post-Processing Loop ---
-            if not initial_clip_paths:
-                 logger.warning(f"VP Post: No initial clips were successfully created for {os.path.basename(video_path)}. Skipping post-processing.")
-                 return [] # Return empty if clipping failed entirely
-
-            logger.info(f"--- VP Post-Processing {len(initial_clip_paths)} initial clips ---")
-            for clip_path in initial_clip_paths:
-                 if not os.path.exists(clip_path):
-                     logger.warning(f"VP Post: Initial clip path missing, skipping: {clip_path}")
-                     continue
-
-                 logger.debug(f"VP Post: Processing '{os.path.basename(clip_path)}'")
-                 current_input_path = clip_path # Start with the initial clip
-                 final_output_for_this_clip = clip_path # Assume initial clip is final unless changed
-                 needs_re_encoding = False # Flag if any filter requires re-encoding
-
-                 try:
-                    # --- Audio Extraction (Optional) ---
-                    if extract_audio and not remove_audio: # Only if audio wasn't removed initially
-                        # This runs as a separate FFmpeg command
-                        audio_file = self._extract_audio(current_input_path)
-                        if audio_file:
-                            logger.debug(f"VP Post: Extracted audio for {os.path.basename(clip_path)}")
-                        # Audio extraction doesn't change the video path being processed
-
-                    # --- Prepare filters for combined re-encoding run ---
-                    video_filters = []
-                    audio_filters = [] # Currently unused, but could be added
-                    output_suffix_parts = [] # To build a descriptive filename
-
-                    # Vertical Crop / Format Filter
-                    if vertical_crop:
-                        # Define crop/scale/pad filters
-                        video_filters.extend([
-                            "crop=w=min(iw\\,ih*9/16):h=min(ih\\,iw*16/9)",
-                            "scale=w=1080:h=1920:force_original_aspect_ratio=decrease",
-                            "pad=w=1080:h=1920:x=(ow-iw)/2:y=(oh-ih)/2:color=black",
-                            "setsar=1" # Ensure square pixels
-                        ])
-                        output_suffix_parts.append("crop")
-                        needs_re_encoding = True
-
-                    # Mirror Filter
-                    if mirror:
-                        video_filters.append("hflip")
-                        output_suffix_parts.append("mir")
-                        needs_re_encoding = True
-
-                    # Enhancement Filter
-                    if enhance:
-                        # Define enhancement filters (adjust values as needed)
-                        video_filters.append("eq=contrast=1.1:brightness=0.01:saturation=1.1:gamma=1.05")
-                        output_suffix_parts.append("enh")
-                        needs_re_encoding = True
-
-                    # --- Execute Combined Re-encoding (if needed) ---
-                    if needs_re_encoding:
-                        # Construct unique output path for the processed version
-                        base, ext = os.path.splitext(clip_path) # Use original clip path base
-                        # Remove existing suffixes to avoid doubling up
-                        known_suffixes = ["_noaudio", "_enhanced", "_formatted", "_crop", "_mir"]
-                        for suffix in known_suffixes:
-                             if base.endswith(suffix): base = base[:-len(suffix)]; break
-                        output_suffix = "_" + "_".join(output_suffix_parts) + ext
-                        processed_output_path = base + output_suffix
-                        operation_desc = "+".join(output_suffix_parts)
-
-                        logger.info(f"VP Post ({operation_desc}): -> {os.path.basename(processed_output_path)}")
-
-                        # Build ffmpeg-python command for combined filters
-                        input_stream = ffmpeg.input(current_input_path)
-                        filtered_video = input_stream['v'].filter_multi_output('split')[0] # Start chain
-                        if video_filters:
-                            filtered_video = filtered_video.filter("vf", ",".join(video_filters))
-
-                        # Handle audio: copy if present and not removed, otherwise disable
-                        output_params_post = {'c:v': 'libx264', 'preset': 'medium', 'crf': 23}
-                        has_audio = False
-                        if not remove_audio:
-                             try:
-                                 # Probe the *current input* for audio before filtering
-                                 probe = ffmpeg.probe(current_input_path, cmd=self.ffprobe_path)
-                                 has_audio = any(s.get('codec_type') == 'audio' for s in probe.get('streams', []))
-                             except Exception: pass
-
-                        if has_audio:
-                            # If filtering video, we MUST re-encode audio or copy it carefully. Copy is preferred.
-                            output_params_post['c:a'] = 'copy'
-                            stream = ffmpeg.output(filtered_video, input_stream['a'], processed_output_path, **output_params_post)
-                        else:
-                            output_params_post['an'] = None
-                            stream = ffmpeg.output(filtered_video, processed_output_path, **output_params_post)
-
-                        # Run the combined post-processing command
-                        if self._run_ffmpeg_command(stream, f"Post-Process ({operation_desc})"):
-                             # If successful, update the final path for this clip
-                             final_output_for_this_clip = processed_output_path
-                             # Mark the original clip path as intermediate if it's different
-                             if clip_path != final_output_for_this_clip:
-                                 intermediate_files.add(clip_path)
-                             logger.info(f"VP Post: Successfully processed -> {os.path.basename(final_output_for_this_clip)}")
-                        else:
-                             logger.error(f"VP Post: Failed to apply post-processing filters ({operation_desc}) to {os.path.basename(clip_path)}. Using original clip.")
-                             # Keep final_output_for_this_clip as the original clip_path
-
-                    # Add the final path (either original or processed) to the list
-                    final_output_paths.append(final_output_for_this_clip)
-
-                 except Exception as post_e:
-                     logger.error(f"VP Post: Error during post-processing loop for '{os.path.basename(clip_path)}': {post_e}")
-                     traceback.print_exc()
-                     # If an error occurred, ensure the *original* clip path is added if it wasn't already
-                     # And if it still exists
-                     if os.path.exists(clip_path) and clip_path not in final_output_paths:
-                         final_output_paths.append(clip_path)
-            # --- End Post-Processing Loop ---
-
-            # --- Cleanup Intermediate Files (Optional) ---
-            # If you want to delete the initial clips after processing:
-            # logger.debug(f"VP Cleanup: Intermediate files marked: {intermediate_files}")
-            # for int_file in intermediate_files:
-            #     if int_file in final_output_paths: continue # Don't delete if it's also a final output
-            #     if os.path.exists(int_file):
-            #         try:
-            #             os.remove(int_file)
-            #             logger.info(f"VP Cleanup: Removed intermediate file: {os.path.basename(int_file)}")
-            #         except OSError as e:
-            #             logger.warning(f"VP Cleanup: Failed to remove intermediate file {int_file}: {e}")
-
-            logger.info(f"--- VP ProcessVideo Finish: {os.path.basename(video_path)}. Final clips: {len(final_output_paths)} ---")
-            return final_output_paths
-
-        except (FFmpegNotFoundError, VideoProcessingError, FileNotFoundError, ValueError, TypeError) as e:
-             # Catch errors occurring before or during the main processing loops
-             logger.error(f"VP ProcessVideo: Failed for {os.path.basename(video_path)}: {e}")
-             # No traceback here unless debugging, as the error type is known
-             return [] # Return empty list on failure
-        except Exception as e:
-            # Catch unexpected critical errors
-            logger.error(f"VP ProcessVideo: Unexpected critical error for {os.path.basename(video_path)}: {e}")
-            traceback.print_exc()
-            return [] # Return empty list on failure
-
-
-    # --- Individual Post-Processing Steps (Refactored for internal use in combined step) ---
-    # These are kept for reference or potential future use, but the main process_video
-    # now combines filters where possible for efficiency.
-
-    def _extract_audio(self, clip_path: str) -> Optional[str]:
-        """Extracts audio to an MP3 file. Returns output path or None."""
-        clean_clip_path = str(clip_path).strip('"')
-        if not os.path.isfile(clean_clip_path):
-             logger.warning(f"VP ExtractAudio: Input file not found: {clean_clip_path}")
-             return None
-        base, ext = os.path.splitext(clean_clip_path)
-        audio_output = base + ".mp3"
-
-        # Check if paths are configured
-        if not self.ffmpeg_path or not self.ffprobe_path:
-             logger.error("VP ExtractAudio: FFmpeg/FFprobe paths not configured in VideoProcessor.")
-             return None
-        logger.info(f"VP ExtractAudio: -> {os.path.basename(audio_output)}")
-        try:
-            # Check for audio stream first
-            probe = ffmpeg.probe(clean_clip_path, cmd=self.ffprobe_path)
-            if not any(s.get('codec_type') == 'audio' for s in probe.get('streams', [])):
-                 logger.warning(f"VP ExtractAudio: No audio stream found in '{os.path.basename(clean_clip_path)}'.")
-                 return None # No audio to extract
-
-            # Build ffmpeg-python command
-            input_stream = ffmpeg.input(clean_clip_path)
-            # Select only the audio stream ('a')
-            stream = ffmpeg.output(input_stream['a'], audio_output, format="mp3", acodec='libmp3lame', q='2') # Good quality VBR
-
-            # Run using helper
-            if self._run_ffmpeg_command(stream, "Extract Audio"):
-                 if os.path.exists(audio_output): return audio_output
-                 else: logger.error("VP ExtractAudio: Command success but output file missing."); return None
+            if is_ffmpeg or is_ffprobe:
+                self.logger.debug(f"_verify_executable PASSED (version string found): {exec_path}")
+                return True
             else:
-                 return None # _run_ffmpeg_command already logged error
-        except ffmpeg.Error as e:
-             stderr = e.stderr.decode('utf-8', errors='replace') if e.stderr else "N/A"
-             logger.error(f"VP ExtractAudio: ffmpeg.Error for {os.path.basename(clip_path)}: {stderr}")
-             return None
+                if process.returncode == 0:
+                     self.logger.warning(f"_verify_executable PASSED (return code 0, but version string missing): {exec_path}")
+                     return True
+                elif "usage:" in output or "option not found" in output:
+                     self.logger.warning(f"_verify_executable PASSED (likely ran, showed usage/error message): {exec_path}")
+                     return True
+                else:
+                     self.logger.error(f"_verify_executable FAILED (non-zero return code and no version/usage string): {exec_path}")
+                     return False
+        # Separate except blocks for different errors
+        except FileNotFoundError:
+            self.logger.error(f"_verify_executable FAILED: FileNotFoundError for {exec_path}")
+            return False
+        except subprocess.TimeoutExpired:
+            self.logger.error(f"_verify_executable FAILED: Command timed out for {exec_path}.")
+            return False
+        except PermissionError:
+            self.logger.error(f"_verify_executable FAILED: PermissionError executing {exec_path}.")
+            return False
         except Exception as e:
-             logger.error(f"VP ExtractAudio: Unexpected error for {os.path.basename(clip_path)}: {e}")
-             traceback.print_exc()
-             return None
+            self.logger.error(f"_verify_executable FAILED: Unexpected error for {exec_path}: {e}", exc_info=True)
+            return False
 
-    # Note: _enhance_video and _format_video logic is now primarily handled
-    # within the combined post-processing section of process_video for efficiency.
-    # These separate methods could be kept for standalone use cases if needed,
-    # but ensure they use self.ffmpeg_path and self.ffprobe_path correctly if kept.
-    # For clarity, I'll comment them out here as the main flow doesn't use them separately anymore.
+    def _run_command(self, cmd: List[str], purpose: str) -> Tuple[bool, str, str]:
+        """Runs a basic subprocess command (FFmpeg/FFprobe) and handles errors."""
+        self.logger.debug(f"Running Command ({purpose}): {' '.join(cmd)}")
+        try:
+            process = subprocess.run(cmd, capture_output=True, check=False, text=True, encoding='utf-8', errors='ignore')
+            stdout = process.stdout
+            stderr = process.stderr
+            if stderr and stderr.strip():
+                 self.logger.debug(f"Stderr from {purpose} (Return Code {process.returncode}): {stderr.strip()}")
 
-    # def _enhance_video(self, clip_path: str) -> Optional[str]: ...
-    # def _format_video(self, clip_path: str, vertical_crop: bool, mirror: bool) -> Optional[str]: ...
+            if process.returncode != 0:
+                self.logger.error(f"Error during {purpose}. Return Code: {process.returncode}")
+                self.logger.error(f"Command: {' '.join(cmd)}")
+                error_summary = stderr.strip().splitlines()
+                self.logger.error(f"Stderr Summary: {' | '.join(error_summary[:5])}{'...' if len(error_summary) > 5 else ''}")
+                return False, stdout, stderr
 
-    # --- Context Manager (Keep if needed for OpenCV later) ---
-    # @contextmanager
-    # def _video_capture(self, video_path: str, start_time: float): ...
+            self.logger.debug(f"{purpose.capitalize()} command execution successful (Return Code 0).")
+            return True, stdout, stderr
+        # Separate except blocks
+        except FileNotFoundError:
+            self.logger.critical(f"Command failed: Executable not found for '{cmd[0]}'")
+            raise FFmpegNotFoundError(f"Executable not found: {cmd[0]}")
+        except Exception as e:
+            self.logger.critical(f"Unexpected error running command '{' '.join(cmd)}': {e}", exc_info=True)
+            raise VideoProcessingError(f"Unexpected error during {purpose}: {e}")
+
+    def get_video_info(self, input_path: str) -> Optional[Dict[str, Any]]:
+        """Gets video information using FFprobe."""
+        if not os.path.exists(input_path):
+            self.logger.error(f"Cannot get info: Input file not found: {input_path}")
+            return None
+
+        cmd = [
+            self.ffprobe_path,
+            '-v', 'error',
+            '-print_format', 'json',
+            '-show_format',
+            '-show_streams',
+            input_path
+        ]
+        success, stdout, stderr = self._run_command(cmd, f"getting video info for {os.path.basename(input_path)}")
+
+        if not success:
+            self.logger.error(f"FFprobe failed to get info for: {input_path}")
+            return None
+
+        try:
+            info = json.loads(stdout)
+            video_stream = next((s for s in info.get('streams', []) if s.get('codec_type') == 'video'), None)
+            audio_stream = next((s for s in info.get('streams', []) if s.get('codec_type') == 'audio'), None)
+            duration_str = info.get('format', {}).get('duration')
+            duration = float(duration_str) if duration_str else 0.0
+
+            if duration <= 0:
+                self.logger.warning(f"FFprobe reported 0 or invalid duration for {input_path}. Trying video stream duration.")
+                duration = float(video_stream.get('duration', 0)) if video_stream else 0.0
+                if duration <= 0:
+                    self.logger.error("Could not determine valid duration from format or video stream.")
+                    return None
+
+            width = video_stream.get('width') if video_stream else None
+            height = video_stream.get('height') if video_stream else None
+            avg_framerate_str = video_stream.get('avg_frame_rate', '0/0') if video_stream else '0/0'
+            avg_framerate = 0.0 # Default
+            if '/' in avg_framerate_str: # Basic check for valid format
+                try:
+                    num_str, den_str = avg_framerate_str.split('/')
+                    num, den = int(num_str), int(den_str)
+                    if den != 0: avg_framerate = num / den
+                except (ValueError, ZeroDivisionError):
+                     self.logger.warning(f"Could not parse frame rate: {avg_framerate_str}")
+
+            result = {
+                'duration': duration, 'width': width, 'height': height, 'avg_framerate': avg_framerate,
+                'avg_framerate_str': avg_framerate_str, 'video_codec': video_stream.get('codec_name') if video_stream else None,
+                'audio_codec': audio_stream.get('codec_name') if audio_stream else None,
+                'size': info.get('format', {}).get('size'), 'raw_info': info
+            }
+            self.logger.info(f"Video Info for '{os.path.basename(input_path)}': Duration={result['duration']:.2f}s, Res={result['width']}x{result['height']}, FPS={result['avg_framerate']:.2f}")
+            return result
+        # Specific exceptions first
+        except (json.JSONDecodeError, KeyError, ValueError, TypeError) as e:
+            self.logger.error(f"Error parsing FFprobe output for {input_path}: {e}", exc_info=True)
+            self.logger.debug(f"FFprobe stdout was: {stdout}")
+            return None
+        except Exception as e: # General catch-all
+            self.logger.error(f"Unexpected error processing FFprobe output for {input_path}: {e}", exc_info=True)
+            return None
+
+    def detect_scene_transition(self, video_path: str, target_start_sec: float, threshold: float = 30.0) -> float:
+        """Detects scene transition near a target time using PySceneDetect."""
+        if not scenedetect_available:
+            self.logger.warning("Scene detection skipped: PySceneDetect not available.")
+            return target_start_sec
+
+        self.logger.info(f"Attempting scene detection near {target_start_sec:.2f}s for '{os.path.basename(video_path)}' (Threshold: {threshold})")
+        video = None
+        stats_manager = None # Initialize for finally block
+        scene_manager = None # Initialize for finally block
+
+        try:
+            video = open_video(video_path)
+            stats_file_path = f"{os.path.splitext(video_path)[0]}.stats.csv"
+            stats_manager = StatsManager()
+            scene_manager = SceneManager(stats_manager=stats_manager)
+            scene_manager.add_detector(ContentDetector(threshold=threshold))
+
+            if os.path.exists(stats_file_path):
+                self.logger.debug(f"Attempting to load stats file: {stats_file_path}")
+                try: # Nested try for loading stats
+                    stats_manager.load_from_csv(stats_file_path)
+                    self.logger.debug(f"Stats file loaded successfully.")
+                except StatsFileCorrupt as e:
+                    self.logger.warning(f"Scene detection stats file corrupt: {e}. Detecting scenes without stats. Deleting corrupt file.")
+                    try: # Nested try for removing corrupt file
+                         os.remove(stats_file_path)
+                    except OSError as delete_err:
+                         self.logger.error(f"Failed to delete corrupt stats file '{stats_file_path}': {delete_err}")
+                    # Reset managers after corruption
+                    stats_manager = StatsManager()
+                    scene_manager = SceneManager(stats_manager=stats_manager)
+                    scene_manager.add_detector(ContentDetector(threshold=threshold))
+                except Exception as load_err: # Catch other loading errors
+                    self.logger.error(f"Error loading stats file '{stats_file_path}': {load_err}. Proceeding without stats.")
+                    stats_manager = StatsManager()
+                    scene_manager = SceneManager(stats_manager=stats_manager)
+                    scene_manager.add_detector(ContentDetector(threshold=threshold))
+            # else: # Optional: log if no stats file found
+            #     self.logger.debug(f"No stats file found at: {stats_file_path}")
+
+            self.logger.debug("Starting scene detection process...")
+            scene_manager.detect_scenes(video=video, show_progress=False)
+            self.logger.debug("Scene detection process finished.")
+
+            if stats_manager and stats_manager.is_save_required():
+                 self.logger.debug(f"Saving updated stats file: {stats_file_path}")
+                 try: # Nested try for saving stats
+                     stats_manager.save_to_csv(stats_file_path)
+                 except Exception as save_err:
+                     self.logger.error(f"Failed to save stats file '{stats_file_path}': {save_err}")
+
+            scene_list = scene_manager.get_scene_list()
+            if not scene_list:
+                self.logger.warning("Scene detection: No scenes found.")
+                return target_start_sec
+
+            best_scene_start_sec = -1.0
+            for scene_start_tc, scene_end_tc in scene_list:
+                scene_start_sec = scene_start_tc.get_seconds()
+                if scene_start_sec >= target_start_sec - 0.1: # Allow slight tolerance
+                    best_scene_start_sec = scene_start_sec
+                    self.logger.info(f"Scene detection: Found scene boundary at {best_scene_start_sec:.3f}s (target was {target_start_sec:.3f}s)")
+                    break # Use the first suitable scene found
+
+            if best_scene_start_sec < 0:
+                 # If no scene starts at or after the target
+                 last_scene_start_tc, last_scene_end_tc = scene_list[-1]
+                 last_scene_start_sec = last_scene_start_tc.get_seconds()
+                 last_scene_end_sec = last_scene_end_tc.get_seconds()
+                 # Check if target is within the last scene
+                 if last_scene_start_sec <= target_start_sec < last_scene_end_sec:
+                     self.logger.warning(f"Scene detection: Target time {target_start_sec:.3f}s falls within last scene. Using last scene start: {last_scene_start_sec:.3f}s.")
+                     # Return start of the last scene instead? Or original target? Using last start.
+                     return last_scene_start_sec
+                 else:
+                     # Target is before first scene or after last scene ends
+                     self.logger.warning(f"Scene detection: No scene boundary found at or after {target_start_sec:.3f}s. Using original target time.")
+                     return target_start_sec
+            # else: # A suitable scene start was found
+            #     return best_scene_start_sec
+            return best_scene_start_sec # Return the found time
+
+        except Exception as e: # Catch errors during main detection process
+            self.logger.error(f"Error during scene detection for {os.path.basename(video_path)}: {type(e).__name__} - {e}", exc_info=True)
+            return target_start_sec # Return original target on error
+        finally: # Ensure video resource is always released
+             if video:
+                 try:
+                     video.release()
+                     self.logger.debug("Scene detection video resource released.")
+                 except Exception as release_err:
+                     self.logger.warning(f"Error releasing scene detection video resource: {release_err}")
+
+
+    def _extract_clip(self, input_path: str, output_filename: str, start_sec: float, end_sec: float, use_copy: bool = True) -> Optional[str]:
+        """
+        Extracts a clip, ALWAYS applying vertical 9:16 formatting (crop/scale/pad).
+        Requires re-encoding, so 'use_copy' argument is ignored.
+        Requires the ffmpeg-python library.
+        """
+        output_path = os.path.join(self.output_dir, output_filename)
+        duration = end_sec - start_sec
+
+        if duration <= 0.01:
+            self.logger.warning(f"Skipping clip extraction: Invalid or zero duration ({duration:.3f}s) for {output_filename}")
+            return None
+
+        if not FFMPEG_PYTHON_AVAILABLE:
+            self.logger.error("Cannot extract clip with vertical formatting: ffmpeg-python library is required but not found.")
+            raise VideoProcessingError("Cannot apply vertical formatting: ffmpeg-python library not installed.")
+
+        log_prefix = "Extracting clip (re-encode, 9:16)"
+        self.logger.info(f"{log_prefix}: {output_filename} [{start_sec:.3f}s -> {end_sec:.3f}s]")
+
+        if os.path.exists(output_path):
+            self.logger.warning(f"Output file {output_filename} already exists. Overwriting.")
+            try:
+                os.remove(output_path)
+            except OSError as e:
+                self.logger.error(f"Failed to remove existing file {output_path}: {e}. Extraction may fail.")
+                return None
+
+        # --- Main Try Block for ffmpeg-python operation ---
+        try:
+            input_stream = ffmpeg.input(input_path, ss=f"{start_sec:.6f}", to=f"{end_sec:.6f}")
+            video = input_stream['v']
+            # Use probe to check for audio before trying to map ['a?']
+            has_audio = False
+            try: # Inner try for probe
+                probe_data = ffmpeg.probe(input_path, cmd=self.ffprobe_path)
+                if any(stream.get('codec_type') == 'audio' for stream in probe_data.get('streams', [])):
+                    has_audio = True
+                    self.logger.debug(f"Probe detected audio stream in {os.path.basename(input_path)}.")
+            except ffmpeg.Error as probe_err: # Specific ffmpeg probe error
+                stderr_decode = probe_err.stderr.decode('utf-8', errors='replace') if probe_err.stderr else "N/A"
+                self.logger.warning(f"Could not probe for audio stream in {input_path}: {stderr_decode}")
+            except Exception as probe_err_generic: # Catch other potential probe errors
+                 self.logger.warning(f"Unexpected error probing for audio stream in {input_path}: {probe_err_generic}", exc_info=True)
+
+            # Apply filters
+            self.logger.debug(f"Applying 9:16 filters to {output_filename}")
+            video = video.filter("crop", w="min(iw,ih*9/16)", h="min(ih,iw*16/9)")
+            video = video.filter("scale", w="1080", h="1920", force_original_aspect_ratio="decrease")
+            video = video.filter("pad", w="1080", h="1920", x="(ow-iw)/2", y="(oh-ih)/2", color="black")
+            video = video.filter("setsar", sar="1") # Ensure Square Pixels
+
+            output_kwargs = {
+                'c:v': 'libx264', 'preset': 'fast', 'crf': '23', 'movflags': '+faststart',
+                'c:a': 'aac', 'b:a': '128k', 'ac': 2 # Defaults
+            }
+
+            streams_to_output = [video]
+            if has_audio:
+                audio = input_stream['a?'] # Map audio only if probe found it
+                streams_to_output.append(audio)
+                self.logger.debug("Audio stream mapped for output.")
+            else:
+                 self.logger.warning(f"No audio stream mapped for {output_filename}. Output will be video-only.")
+                 output_kwargs.pop('c:a', None); output_kwargs.pop('b:a', None); output_kwargs.pop('ac', None)
+
+            # Define and run the FFmpeg process
+            stream = ffmpeg.output(*streams_to_output, output_path, **output_kwargs)
+            cmd_list_for_log = stream.compile(cmd=self.ffmpeg_path, overwrite_output=True)
+            self.logger.debug(f"Running FFmpeg command (via ffmpeg-python): {' '.join(cmd_list_for_log)}")
+
+            # Execute FFmpeg - Errors from here are caught by the outer except ffmpeg.Error below
+            stdout, stderr = stream.run(cmd=self.ffmpeg_path, capture_stdout=True, capture_stderr=True, overwrite_output=True)
+
+            # Process stderr if run succeeded
+            stderr_str = stderr.decode('utf-8', errors='replace').strip()
+            if stderr_str:
+                self.logger.debug(f"FFmpeg stderr for {output_filename}:\n{stderr_str[:1000]}{'...' if len(stderr_str)>1000 else ''}")
+
+            # --- Verification ---
+            if not os.path.exists(output_path):
+                self.logger.error(f"Clip extraction command finished, but output file is missing: {output_path}")
+                raise VideoProcessingError(f"Output file missing after FFmpeg run for {output_filename}") # Raise error
+
+            # Check file size using nested try-except
+            try:
+                if os.path.getsize(output_path) == 0:
+                    self.logger.error(f"Clip extraction command finished, but output file is empty (0 bytes): {output_path}")
+                    # Try to remove the empty file
+                    try:
+                        os.remove(output_path)
+                    except OSError:
+                        pass # Ignore error during cleanup
+                    raise VideoProcessingError(f"Output file empty after FFmpeg run for {output_filename}") # Raise error
+            except OSError as e: # Catch getsize error
+                 self.logger.error(f"Could not get size of output file {output_path}: {e}")
+                 raise VideoProcessingError(f"Could not verify output file size for {output_filename}") from e # Raise error
+
+            # --- Success Case ---
+            absolute_output_path = os.path.abspath(output_path)
+            self.logger.info(f"Successfully extracted clip (9:16 formatted): {absolute_output_path}")
+            return absolute_output_path
+
+        # --- Exception Handling for the *main* try block ---
+        # Catch specific ffmpeg-python errors first
+        except ffmpeg.Error as e:
+            stderr_output = e.stderr.decode('utf-8', errors='replace') if e.stderr else "No stderr available"
+            self.logger.error(f"Failed to extract clip {output_filename} (ffmpeg.Error):\n{stderr_output[:1500]}{'...' if len(stderr_output)>1500 else ''}")
+            # Attempt cleanup using standard try/except
+            if os.path.exists(output_path):
+                try:
+                    os.remove(output_path)
+                except OSError as remove_e:
+                    self.logger.warning(f"Failed to remove incomplete output file {output_path} after ffmpeg.Error: {remove_e}")
+            # Raise error to signal failure upstream
+            raise VideoProcessingError(f"FFmpeg error during clip extraction for {output_filename}") from e
+
+        # Catch other specific errors raised within the try block
+        except (VideoProcessingError, FFmpegNotFoundError) as e:
+             self.logger.error(f"Clip extraction failed for {output_filename}: {e}")
+             if os.path.exists(output_path):
+                 try:
+                     os.remove(output_path)
+                 except OSError as remove_e:
+                     self.logger.warning(f"Failed to remove potentially incomplete output file {output_path} after error: {remove_e}")
+             return None # Return None for these specific failures (or re-raise if needed)
+
+        # Catch any other unexpected error
+        except Exception as e:
+            self.logger.error(f"Unexpected error during clip extraction for {output_filename}: {e}", exc_info=True)
+            if os.path.exists(output_path):
+                 try:
+                     os.remove(output_path)
+                 except OSError as remove_e:
+                     self.logger.warning(f"Failed to remove potentially incomplete output file {output_path} after error: {remove_e}")
+            # Raise error to signal failure upstream
+            raise VideoProcessingError(f"Unexpected error during clip extraction for {output_filename}") from e
+    # ***** END REFORMATTED _extract_clip *****
+
+
+    def process_video(self, input_path: str, **kwargs) -> List[str]:
+        """
+        Processes a single video file to extract clips based on provided options.
+        Clips will ALWAYS be vertically formatted (9:16) using ffmpeg-python.
+        """
+        self.logger.info(f"--- Processing video: {input_path} ---")
+        if not os.path.exists(input_path):
+            self.logger.error(f"Input video file not found: {input_path}")
+            return []
+
+        # --- Get Options ---
+        try:
+            min_clip_dur = float(kwargs.get('min_duration', 5.0))
+            max_clip_dur = float(kwargs.get('max_duration', 60.0))
+            use_scene_detection = bool(kwargs.get('use_scene_detection', False))
+            scene_threshold = float(kwargs.get('scene_threshold', 30.0))
+            num_clips_target = int(kwargs.get('num_clips', 1))
+            if kwargs.get('use_codec_copy', False):
+                 self.logger.warning("Vertical formatting requires re-encoding. 'Use Codec Copy' option will be ignored by _extract_clip.")
+            use_copy = False # Force re-encoding
+        except (ValueError, TypeError) as e:
+            self.logger.error(f"Invalid processing option provided: {e}. Using defaults.")
+            min_clip_dur = 5.0; max_clip_dur = 60.0; use_scene_detection = False
+            scene_threshold = 30.0; num_clips_target = 1; use_copy = False
+
+        # --- Get Video Info ---
+        video_info = self.get_video_info(input_path)
+        if not video_info or not video_info.get('duration'):
+            self.logger.error(f"Could not get video info or duration for {input_path}. Aborting processing.")
+            return []
+
+        total_duration = video_info['duration']
+        base_filename = os.path.splitext(os.path.basename(input_path))[0]
+        processed_clips = [] # Store absolute paths
+        clip_count = 0
+
+        # --- Clipping Logic ---
+        # Outer try-except for the whole process_video logic
+        try:
+            if use_scene_detection and scenedetect_available:
+                # --- Scene Detection Based Clipping ---
+                self.logger.info(f"Processing based on Scene Detection (Threshold: {scene_threshold}). Output will be 9:16.")
+                video = None
+                try: # Inner try-finally for scene detection resource release
+                    video = open_video(input_path)
+                    stats_file = f"{os.path.splitext(input_path)[0]}.stats.csv"
+                    stats_manager = StatsManager()
+                    scene_manager = SceneManager(stats_manager=stats_manager)
+                    scene_manager.add_detector(ContentDetector(threshold=scene_threshold))
+
+                    # *** CORRECTED if/try block structure ***
+                    if os.path.exists(stats_file):
+                        self.logger.debug(f"Attempting to load stats file: {stats_file}")
+                        try: # Nested try for loading stats starts here
+                            stats_manager.load_from_csv(stats_file)
+                            self.logger.debug("Stats file loaded successfully.")
+                        except StatsFileCorrupt as e:
+                            self.logger.warning(f"Corrupt stats file {stats_file}, processing without. Deleting.")
+                            try:
+                                os.remove(stats_file)
+                            except OSError as remove_e:
+                                self.logger.error(f"Failed to remove corrupt stats file '{stats_file}': {remove_e}")
+                            # Reset managers
+                            stats_manager = StatsManager()
+                            scene_manager = SceneManager(stats_manager=stats_manager)
+                            scene_manager.add_detector(ContentDetector(threshold=scene_threshold))
+                        except Exception as load_err:
+                            self.logger.error(f"Error loading stats file {stats_file}: {load_err}. Proceeding without stats.")
+                            # Reset managers
+                            stats_manager = StatsManager()
+                            scene_manager = SceneManager(stats_manager=stats_manager)
+                            scene_manager.add_detector(ContentDetector(threshold=scene_threshold))
+                    # *** END CORRECTION ***
+
+                    scene_manager.detect_scenes(video=video); scene_list = scene_manager.get_scene_list()
+                    if stats_manager and stats_manager.is_save_required():
+                        try:
+                            stats_manager.save_to_csv(stats_file)
+                        except Exception as save_err:
+                            self.logger.error(f"Failed to save stats file {stats_file}: {save_err}")
+                    self.logger.info(f"Detected {len(scene_list)} potential scenes.")
+
+                    for i, (start_tc, end_tc) in enumerate(scene_list):
+                        start_sec = start_tc.get_seconds(); end_sec = end_tc.get_seconds(); duration = end_sec - start_sec
+                        self.logger.info(f"Scene {i+1}: Start={start_sec:.3f}, End={end_sec:.3f}, Duration={duration:.3f}. Checking against Min={min_clip_dur}, Max={max_clip_dur}")
+                        if min_clip_dur <= duration <= max_clip_dur:
+                            self.logger.info(f"Scene {i+1} ACCEPTED for clipping.")
+                            clip_count += 1
+                            output_filename = f"{base_filename}_scene_{clip_count:03d}_9x16.mp4" # Add indicator
+                            clip_path = self._extract_clip(input_path, output_filename, start_sec, end_sec, use_copy=False)
+                            if clip_path: processed_clips.append(clip_path) # Store absolute path
+                        elif duration > max_clip_dur: self.logger.info(f"Scene {i+1} duration ({duration:.2f}s) exceeds max_duration ({max_clip_dur:.2f}s). Skipping.")
+                        else: self.logger.info(f"Scene {i+1} duration ({duration:.2f}s) is less than min_duration ({min_clip_dur:.2f}s). Skipping.")
+
+                except Exception as e: # Catch errors from scene detection part
+                    self.logger.error(f"Error during scene detection processing loop for {input_path}: {e}", exc_info=True)
+                finally: # Ensure release even if errors occur within scene detection try
+                    if video:
+                        try: video.release()
+                        except Exception: pass
+
+            else:
+                # --- Fixed Interval / Target Number Clipping ---
+                self.logger.info("Processing based on fixed interval or target number. Output will be 9:16.")
+                if total_duration <= 0: self.logger.error("Cannot perform fixed interval clipping: Total duration is zero or negative."); return []
+                if num_clips_target <= 0: self.logger.warning("Number of clips target is zero or negative, no clips will be generated."); return []
+                target_clip_dur = total_duration / num_clips_target; effective_clip_dur = max(min_clip_dur, min(max_clip_dur, target_clip_dur))
+                self.logger.info(f"Targeting ~{num_clips_target} clips. Effective clip duration: {effective_clip_dur:.2f}s (Min: {min_clip_dur}, Max: {max_clip_dur})")
+                start_sec = 0.0
+                while start_sec < total_duration and clip_count < num_clips_target:
+                    end_sec = min(start_sec + effective_clip_dur, total_duration); actual_duration = end_sec - start_sec
+                    self.logger.info(f"Interval {clip_count+1}: Start={start_sec:.3f}, End={end_sec:.3f}, Duration={actual_duration:.3f}")
+                    if actual_duration < min_clip_dur and (total_duration - start_sec) < min_clip_dur: self.logger.info(f"Remaining duration ({actual_duration:.2f}s) less than min clip duration. Stopping."); break
+                    if actual_duration < min_clip_dur and end_sec < total_duration: end_sec = min(start_sec + min_clip_dur, total_duration); actual_duration = end_sec - start_sec
+                    if actual_duration < 0.1: break # Avoid tiny clips
+                    clip_count += 1
+                    output_filename = f"{base_filename}_clip_{clip_count:03d}_9x16.mp4" # Add indicator
+                    clip_path = self._extract_clip(input_path, output_filename, start_sec, end_sec, use_copy=False)
+                    if clip_path: processed_clips.append(clip_path) # Store absolute path
+                    start_sec = end_sec
+
+        # Catch specific errors raised from _extract_clip or FFmpeg/FFprobe issues
+        except (VideoProcessingError, FFmpegNotFoundError) as e:
+            self.logger.error(f"Video processing run failed for {input_path}: {e}")
+            # Don't return here, allow the final log and return of potentially partial list
+        # Catch any other unexpected error during the main processing
+        except Exception as e:
+             self.logger.error(f"Unexpected error during video processing for {input_path}: {e}", exc_info=True)
+             # On a totally unexpected error, probably safer to return empty list
+             return []
+        # This block executes regardless of exceptions in the main try
+
+        # --- Final Log ---
+        self.logger.info(f"--- Finished processing {input_path}. Generated {len(processed_clips)} vertically formatted clips. ---")
+        return processed_clips
+
+    # --- Optional: Add other methods ---

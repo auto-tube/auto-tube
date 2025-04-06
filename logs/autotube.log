@@ -2509,3 +2509,765 @@ Error opening output files: Invalid argument
 2025-04-04 22:11:11,821 - autotube - INFO - GUI: Exiting application.
 2025-04-04 22:11:11,915 - autotube - INFO - Tkinter main event loop finished.
 2025-04-04 22:11:11,916 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 12:11:46,813 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 12:11:46,813 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 12:11:46,813 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 12:11:46,813 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 12:11:46,814 - autotube - INFO - Platform: Windows (10)
+2025-04-05 12:11:46,814 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 12:11:46,814 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 12:11:46,862 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 12:11:46,862 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 12:11:46,863 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 12:11:46,863 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 12:11:46,863 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 12:11:46,863 - autotube - INFO - GUI: UI variables created.
+2025-04-05 12:11:46,864 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 12:11:46,864 - autotube - INFO - GUI: Config file not found. Using default variable values.
+2025-04-05 12:11:46,864 - autotube - INFO - GUI: Default output path set to user's home directory: C:\Users\V0iD\Autotube_Output
+2025-04-05 12:11:46,864 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 12:11:46,864 - autotube - WARNING - Google API Key not found in Environment Variables or Settings.
+2025-04-05 12:11:46,865 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 12:11:46,865 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 12:11:46,877 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 12:11:47,602 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 12:11:47,603 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:11:47,636 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-05 12:11:47,668 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-05 12:11:47,668 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 12:11:47,669 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 12:11:47,703 - autotube - INFO - GUI: Tabs added.
+2025-04-05 12:11:47,703 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 12:11:47,830 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 12:11:48,055 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 12:11:48,175 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 12:11:48,246 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 12:11:48,249 - autotube - INFO - GUI: Status bar created.
+2025-04-05 12:11:48,249 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 12:11:48,249 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 12:11:48,249 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 12:11:48,257 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 12:11:48,413 - autotube - WARNING - --- GUI CONFIGURATION ISSUES ---
+2025-04-05 12:11:48,414 - autotube - WARNING - 1. Google API Key missing or invalid (Check Environment Variable 'GOOGLE_API_KEY' or Settings). AI features disabled.
+2025-04-05 12:11:48,414 - autotube - WARNING - --- END CONFIGURATION ISSUES ---
+2025-04-05 12:13:46,990 - autotube - INFO - GUI: Saving settings to C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 12:13:46,991 - autotube - INFO - GUI: Settings saved successfully.
+2025-04-05 12:13:48,526 - autotube - INFO - GUI: Re-configuring APIs and checking FFmpeg after saving settings...
+2025-04-05 12:13:48,527 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 12:13:48,527 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 12:13:48,527 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 12:13:48,528 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 12:13:48,528 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 12:13:48,529 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:13:48,561 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-05 12:13:48,593 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-05 12:13:48,593 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 12:13:48,593 - autotube - INFO - GUI: Initial configuration check passed.
+2025-04-05 12:14:03,967 - autotube - INFO - Adding 1 selected files.
+2025-04-05 12:14:03,973 - autotube - INFO - GUI: Added 1 new video(s) to the queue. Total queue size: 1
+2025-04-05 12:14:26,694 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 12:14:26,695 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 12:14:26,695 - autotube - WARNING - Cannot start clipping: Default output path is invalid or not a directory: C:\Users\V0iD\Autotube_Output
+2025-04-05 12:14:30,615 - autotube - INFO - GUI Action: Selecting default output folder via browse button.
+2025-04-05 12:14:35,515 - autotube - INFO - GUI: Default output folder set to: C:/Users/V0iD/Desktop/clips
+2025-04-05 12:14:36,545 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 12:14:36,546 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 12:14:36,555 - autotube - INFO - --- Starting Clipping Queue Processing Thread ---
+2025-04-05 12:14:36,555 - autotube - INFO - GUI: Clipping thread started successfully for 1 videos.
+2025-04-05 12:14:36,555 - autotube - CRITICAL - Unexpected error finding FFmpeg/FFprobe: find_ffmpeg_executables() takes 0 positional arguments but 2 were given
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\core\processing_manager.py", line 143, in run_clipping_queue
+    ffmpeg_exec, ffprobe_exec = find_ffmpeg_executables(conf_ffmpeg, conf_ffprobe)
+                                ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: find_ffmpeg_executables() takes 0 positional arguments but 2 were given
+2025-04-05 12:14:36,564 - autotube - INFO - GUI Callback: 'Clipping' process finished or stopped.
+2025-04-05 12:14:36,564 - autotube - INFO - Clipping was stopped, keeping remaining items in queue.
+2025-04-05 12:14:36,572 - autotube - INFO - Clipping was stopped. Processed before stop: 0, Errors: 1
+2025-04-05 12:18:12,032 - autotube - INFO - GUI: Window close requested.
+2025-04-05 12:18:12,033 - autotube - INFO - GUI: Exiting application.
+2025-04-05 12:18:12,126 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 12:18:12,126 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 12:18:19,811 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 12:18:19,812 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 12:18:19,812 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 12:18:19,812 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 12:18:19,813 - autotube - INFO - Platform: Windows (10)
+2025-04-05 12:18:19,813 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 12:18:19,813 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 12:18:19,861 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 12:18:19,861 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 12:18:19,861 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 12:18:19,861 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 12:18:19,861 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 12:18:19,862 - autotube - INFO - GUI: UI variables created.
+2025-04-05 12:18:19,862 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 12:18:19,868 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 12:18:19,868 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 12:18:19,869 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 12:18:19,869 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 12:18:19,869 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 12:18:19,880 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 12:18:20,616 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 12:18:20,617 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:18:20,648 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-05 12:18:20,681 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-05 12:18:20,681 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 12:18:20,682 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 12:18:20,710 - autotube - INFO - GUI: Tabs added.
+2025-04-05 12:18:20,711 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 12:18:20,815 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 12:18:20,999 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 12:18:21,110 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 12:18:21,181 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 12:18:21,184 - autotube - INFO - GUI: Status bar created.
+2025-04-05 12:18:21,184 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 12:18:21,184 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 12:18:21,185 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 12:18:21,191 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 12:18:21,349 - autotube - INFO - GUI: Initial configuration check passed.
+2025-04-05 12:18:28,076 - autotube - INFO - Adding 1 selected files.
+2025-04-05 12:18:28,077 - autotube - INFO - GUI: Added 1 new video(s) to the queue. Total queue size: 1
+2025-04-05 12:18:41,052 - autotube - INFO - GUI Action: Selecting default output folder via browse button.
+2025-04-05 12:18:47,140 - autotube - INFO - GUI: Default output folder set to: C:/Users/V0iD/Desktop/clips
+2025-04-05 12:18:48,204 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 12:18:48,205 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 12:18:48,214 - autotube - INFO - --- Starting Clipping Queue Processing Thread ---
+2025-04-05 12:18:48,214 - autotube - INFO - GUI: Clipping thread started successfully for 1 videos.
+2025-04-05 12:18:48,215 - autotube - INFO - Clipping Queue: Using FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:18:48,225 - autotube - INFO - CORE CLIP: Initializing VideoProcessor (Output: C:/Users/V0iD/Desktop/clips)
+2025-04-05 12:18:48,257 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-05 12:18:48,289 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-05 12:18:48,289 - autotube - INFO - CORE CLIP: VideoProcessor Initialized successfully.
+2025-04-05 12:18:48,289 - autotube - INFO - CORE CLIP: Processing video 1/1: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+2025-04-05 12:18:48,289 - autotube - CRITICAL - CRITICAL UNEXPECTED ERROR clipping saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\core\processing_manager.py", line 204, in run_clipping_queue
+    processed_clips_for_this_video = video_processor.process_video(file_path, **options)
+TypeError: VideoProcessor.process_video() got an unexpected keyword argument 'organize_output'
+2025-04-05 12:18:48,291 - autotube - INFO - CORE CLIP: Skipping file organization as no clips were successfully processed.
+2025-04-05 12:18:48,291 - autotube - INFO - --- Clipping Queue Processing Finished. Success: 0, Errors: 1, Total Attempted: 1, Stopped by user: False ---
+2025-04-05 12:18:48,292 - autotube - INFO - GUI Callback: 'Clipping' process finished or stopped.
+2025-04-05 12:18:48,293 - autotube - INFO - Clipping was stopped, keeping remaining items in queue.
+2025-04-05 12:18:48,302 - autotube - INFO - Clipping was stopped. Processed before stop: 0, Errors: 1
+2025-04-05 12:27:37,056 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 12:27:37,056 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 12:27:37,066 - autotube - INFO - --- Starting Clipping Queue Processing Thread ---
+2025-04-05 12:27:37,066 - autotube - INFO - GUI: Clipping thread started successfully for 1 videos.
+2025-04-05 12:27:37,067 - autotube - INFO - Clipping Queue: Using FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:27:37,077 - autotube - INFO - CORE CLIP: Initializing VideoProcessor (Output: C:/Users/V0iD/Desktop/clips)
+2025-04-05 12:27:37,112 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-05 12:27:37,145 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-05 12:27:37,145 - autotube - INFO - CORE CLIP: VideoProcessor Initialized successfully.
+2025-04-05 12:27:37,146 - autotube - INFO - CORE CLIP: Processing video 1/1: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+2025-04-05 12:27:37,146 - autotube - CRITICAL - CRITICAL UNEXPECTED ERROR clipping saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\core\processing_manager.py", line 204, in run_clipping_queue
+    processed_clips_for_this_video = video_processor.process_video(file_path, **options)
+TypeError: VideoProcessor.process_video() got an unexpected keyword argument 'organize_output'
+2025-04-05 12:27:37,148 - autotube - INFO - CORE CLIP: Skipping file organization as no clips were successfully processed.
+2025-04-05 12:27:37,149 - autotube - INFO - --- Clipping Queue Processing Finished. Success: 0, Errors: 1, Total Attempted: 1, Stopped by user: False ---
+2025-04-05 12:27:37,150 - autotube - INFO - GUI Callback: 'Clipping' process finished or stopped.
+2025-04-05 12:27:37,150 - autotube - INFO - Clipping was stopped, keeping remaining items in queue.
+2025-04-05 12:27:37,159 - autotube - INFO - Clipping was stopped. Processed before stop: 0, Errors: 1
+2025-04-05 12:30:48,589 - autotube - INFO - GUI: Window close requested.
+2025-04-05 12:30:48,589 - autotube - INFO - GUI: Exiting application.
+2025-04-05 12:30:48,704 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 12:30:48,705 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 12:30:53,176 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 12:30:53,177 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 12:30:53,177 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 12:30:53,177 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 12:30:53,177 - autotube - INFO - Platform: Windows (10)
+2025-04-05 12:30:53,178 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 12:30:53,178 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 12:30:53,226 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 12:30:53,227 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 12:30:53,227 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 12:30:53,227 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 12:30:53,227 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 12:30:53,228 - autotube - INFO - GUI: UI variables created.
+2025-04-05 12:30:53,228 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 12:30:53,228 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 12:30:53,228 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 12:30:53,228 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 12:30:53,229 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 12:30:53,229 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 12:30:53,238 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 12:30:53,976 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 12:30:53,977 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:30:54,009 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-05 12:30:54,040 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-05 12:30:54,040 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 12:30:54,041 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 12:30:54,069 - autotube - INFO - GUI: Tabs added.
+2025-04-05 12:30:54,069 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 12:30:54,174 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 12:30:54,353 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 12:30:54,462 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 12:30:54,532 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 12:30:54,534 - autotube - INFO - GUI: Status bar created.
+2025-04-05 12:30:54,534 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 12:30:54,535 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 12:30:54,535 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 12:30:54,541 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 12:30:54,699 - autotube - INFO - GUI: Initial configuration check passed.
+2025-04-05 12:31:00,904 - autotube - INFO - Adding 1 selected files.
+2025-04-05 12:31:00,905 - autotube - INFO - GUI: Added 1 new video(s) to the queue. Total queue size: 1
+2025-04-05 12:31:16,293 - autotube - INFO - GUI Action: Selecting default output folder via browse button.
+2025-04-05 12:31:20,671 - autotube - INFO - GUI: Default output folder set to: C:/Users/V0iD/Desktop/clips
+2025-04-05 12:31:22,244 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 12:31:22,244 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 12:31:22,253 - autotube - INFO - --- Starting Clipping Queue Processing Thread ---
+2025-04-05 12:31:22,253 - autotube - INFO - GUI: Clipping thread started successfully for 1 videos.
+2025-04-05 12:31:22,254 - autotube - INFO - Clipping Queue: Using FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:31:22,264 - autotube - INFO - CORE CLIP: Initializing VideoProcessor (Output: C:/Users/V0iD/Desktop/clips)
+2025-04-05 12:31:22,296 - autotube - INFO - VP Check: FFprobe check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffprobe.exe
+2025-04-05 12:31:22,327 - autotube - INFO - VP Check: FFmpeg check successful using provided path: C:\Users\V0iD\auto-tube\bin\ffmpeg.exe
+2025-04-05 12:31:22,327 - autotube - INFO - CORE CLIP: VideoProcessor Initialized successfully.
+2025-04-05 12:31:22,327 - autotube - INFO - CORE CLIP: Processing video 1/1: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+2025-04-05 12:31:22,328 - autotube - INFO - --- VP ProcessVideo Start: saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4 ---
+2025-04-05 12:31:22,328 - autotube - INFO - VP Options: clips=10, len=30-45s, scene=True(30.0), crop=True, mirror=False, enhance=True, rm_audio=False, ext_audio=True
+2025-04-05 12:31:22,397 - autotube - INFO - VP Details: Duration=1852.28s, Target clips=10
+2025-04-05 12:31:22,398 - autotube - INFO - --- VP Clip Attempt 1 (Target 1/10) ---
+2025-04-05 12:31:22,398 - autotube - INFO - VP SceneDetect: Analyzing 'saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4' after 0.00s (thr=30.0)
+2025-04-05 12:31:22,398 - pyscenedetect - ERROR - VideoManager is deprecated and will be removed.
+2025-04-05 12:31:22,569 - pyscenedetect - INFO - Loaded 1 video, framerate: 30.000 FPS, resolution: 1280 x 720
+2025-04-05 12:31:22,573 - autotube - ERROR - VP ProcessVideo: Unexpected critical error for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4: module 'scenedetect.stats_manager' has no attribute 'StatsFileCorruptError'
+2025-04-05 12:31:22,576 - autotube - WARNING - CORE CLIP: No valid clips generated for saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4.
+2025-04-05 12:31:22,577 - autotube - INFO - CORE CLIP: Skipping file organization as no clips were successfully processed.
+2025-04-05 12:31:22,577 - autotube - INFO - --- Clipping Queue Processing Finished. Success: 0, Errors: 0, Total Attempted: 1, Total Videos in Queue: 1, Stopped by user: False ---
+2025-04-05 12:31:22,578 - autotube - INFO - GUI Callback: 'Clipping' process finished or stopped.
+2025-04-05 12:31:22,578 - autotube - INFO - Clipping was stopped, keeping remaining items in queue.
+2025-04-05 12:31:22,586 - autotube - INFO - Clipping was stopped. Processed before stop: 0, Errors: 0
+2025-04-05 12:37:25,030 - autotube - INFO - GUI: Window close requested.
+2025-04-05 12:37:25,030 - autotube - INFO - GUI: Exiting application.
+2025-04-05 12:37:25,130 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 12:37:25,130 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 12:37:52,374 - autotube - CRITICAL - ERROR [GUI Import]: Failed to import application modules: cannot import name 'run_clipping_queue' from 'core.processing_manager' (C:\Users\V0iD\auto-tube\core\processing_manager.py)
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\gui.py", line 62, in <module>
+    from core.processing_manager import (run_clipping_queue, run_ai_short_generation,
+                                         run_gemini_script_generation, run_gemini_metadata_generation)
+ImportError: cannot import name 'run_clipping_queue' from 'core.processing_manager' (C:\Users\V0iD\auto-tube\core\processing_manager.py)
+2025-04-05 12:37:52,381 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 12:37:52,381 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 12:37:52,382 - autotube - INFO - Platform: Windows (10)
+2025-04-05 12:37:52,382 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 12:37:52,382 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 12:37:52,430 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 12:37:52,430 - autotube - ERROR - GUI cannot start fully due to module import errors. Showing error window.
+2025-04-05 12:37:57,170 - autotube - INFO - Error window closed by user.
+2025-04-05 12:53:03,148 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 12:53:03,149 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 12:53:03,149 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 12:53:03,149 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 12:53:03,149 - autotube - INFO - Platform: Windows (10)
+2025-04-05 12:53:03,149 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 12:53:03,150 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 12:53:03,197 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 12:53:03,197 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 12:53:03,198 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 12:53:03,198 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 12:53:03,198 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 12:53:03,198 - autotube - INFO - GUI: UI variables created.
+2025-04-05 12:53:03,199 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 12:53:03,199 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 12:53:03,199 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 12:53:03,199 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 12:53:03,200 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 12:53:03,200 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 12:53:03,213 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 12:53:03,974 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 12:53:03,975 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:53:03,975 - autotube - ERROR - GUI Error: Unexpected error during FFmpeg path verification
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\gui.py", line 450, in _find_and_verify_ffmpeg
+    _ = VideoProcessor(output_folder=".", # Dummy, doesn't need to exist for check
+                       ffmpeg_path=self.ffmpeg_exec,
+                       ffprobe_path=self.ffprobe_exec)
+TypeError: VideoProcessor.__init__() got an unexpected keyword argument 'output_folder'. Did you mean 'output_dir'?
+2025-04-05 12:53:03,977 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 12:53:04,005 - autotube - INFO - GUI: Tabs added.
+2025-04-05 12:53:04,005 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 12:53:04,110 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 12:53:04,292 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 12:53:04,403 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 12:53:04,473 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 12:53:04,475 - autotube - INFO - GUI: Status bar created.
+2025-04-05 12:53:04,476 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 12:53:04,476 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 12:53:04,476 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 12:53:04,484 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 12:53:04,642 - autotube - WARNING - --- GUI CONFIGURATION ISSUES ---
+2025-04-05 12:53:04,643 - autotube - WARNING - 1. FFmpeg/FFprobe not found or verified (Check bundled 'bin' folder, Environment Variables, or system PATH). Video processing disabled.
+2025-04-05 12:53:04,643 - autotube - WARNING - --- END CONFIGURATION ISSUES ---
+2025-04-05 12:53:18,572 - autotube - INFO - GUI: Window close requested.
+2025-04-05 12:53:18,572 - autotube - INFO - GUI: Exiting application.
+2025-04-05 12:53:18,690 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 12:53:18,691 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 12:53:22,532 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 12:53:22,532 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 12:53:22,533 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 12:53:22,533 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 12:53:22,533 - autotube - INFO - Platform: Windows (10)
+2025-04-05 12:53:22,533 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 12:53:22,533 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 12:53:22,581 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 12:53:22,581 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 12:53:22,582 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 12:53:22,582 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 12:53:22,582 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 12:53:22,582 - autotube - INFO - GUI: UI variables created.
+2025-04-05 12:53:22,582 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 12:53:22,583 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 12:53:22,583 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 12:53:22,583 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 12:53:22,584 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 12:53:22,584 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 12:53:22,595 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 12:53:23,218 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 12:53:23,219 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 12:53:23,219 - autotube - ERROR - GUI Error: Unexpected error during FFmpeg path verification
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\gui.py", line 450, in _find_and_verify_ffmpeg
+    _ = VideoProcessor(output_folder=".", # Dummy, doesn't need to exist for check
+                       ffmpeg_path=self.ffmpeg_exec,
+                       ffprobe_path=self.ffprobe_exec)
+TypeError: VideoProcessor.__init__() got an unexpected keyword argument 'output_folder'. Did you mean 'output_dir'?
+2025-04-05 12:53:23,221 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 12:53:23,249 - autotube - INFO - GUI: Tabs added.
+2025-04-05 12:53:23,250 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 12:53:23,354 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 12:53:23,538 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 12:53:23,649 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 12:53:23,719 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 12:53:23,721 - autotube - INFO - GUI: Status bar created.
+2025-04-05 12:53:23,722 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 12:53:23,722 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 12:53:23,722 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 12:53:23,728 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 12:53:23,886 - autotube - WARNING - --- GUI CONFIGURATION ISSUES ---
+2025-04-05 12:53:23,887 - autotube - WARNING - 1. FFmpeg/FFprobe not found or verified (Check bundled 'bin' folder, Environment Variables, or system PATH). Video processing disabled.
+2025-04-05 12:53:23,887 - autotube - WARNING - --- END CONFIGURATION ISSUES ---
+2025-04-05 13:04:37,644 - autotube - INFO - GUI: Window close requested.
+2025-04-05 13:04:37,645 - autotube - INFO - GUI: Exiting application.
+2025-04-05 13:04:37,761 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 13:04:37,761 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 13:06:26,062 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 13:06:26,063 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 13:06:26,063 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 13:06:26,063 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 13:06:26,063 - autotube - INFO - Platform: Windows (10)
+2025-04-05 13:06:26,063 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 13:06:26,064 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 13:06:26,112 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 13:06:26,112 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 13:06:26,113 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 13:06:26,113 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 13:06:26,113 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 13:06:26,113 - autotube - INFO - GUI: UI variables created.
+2025-04-05 13:06:26,113 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 13:06:26,114 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 13:06:26,114 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 13:06:26,114 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 13:06:26,114 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 13:06:26,115 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 13:06:26,126 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 13:06:26,897 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 13:06:26,898 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:06:26,898 - autotube - ERROR - GUI Error: Unexpected error during FFmpeg path verification
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\gui.py", line 450, in _find_and_verify_ffmpeg
+    _ = VideoProcessor(output_folder=".", # Dummy, doesn't need to exist for check
+                       ffmpeg_path=self.ffmpeg_exec,
+                       ffprobe_path=self.ffprobe_exec)
+TypeError: VideoProcessor.__init__() got an unexpected keyword argument 'output_folder'. Did you mean 'output_dir'?
+2025-04-05 13:06:26,900 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 13:06:26,927 - autotube - INFO - GUI: Tabs added.
+2025-04-05 13:06:26,927 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 13:06:27,032 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 13:06:27,213 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 13:06:27,324 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 13:06:27,396 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 13:06:27,398 - autotube - INFO - GUI: Status bar created.
+2025-04-05 13:06:27,398 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 13:06:27,398 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 13:06:27,399 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 13:06:27,406 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 13:06:27,562 - autotube - WARNING - --- GUI CONFIGURATION ISSUES ---
+2025-04-05 13:06:27,562 - autotube - WARNING - 1. FFmpeg/FFprobe not found or verified (Check bundled 'bin' folder, Environment Variables, or system PATH). Video processing disabled.
+2025-04-05 13:06:27,563 - autotube - WARNING - --- END CONFIGURATION ISSUES ---
+2025-04-05 13:06:34,760 - autotube - INFO - GUI Action: Clear video queue button clicked.
+2025-04-05 13:06:48,090 - autotube - INFO - GUI: Saving settings to C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 13:06:48,091 - autotube - INFO - GUI: Settings saved successfully.
+2025-04-05 13:06:49,514 - autotube - INFO - GUI: Re-configuring APIs and checking FFmpeg after saving settings...
+2025-04-05 13:06:49,514 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 13:06:49,514 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 13:06:49,515 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 13:06:49,515 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 13:06:49,515 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 13:06:49,516 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:06:49,516 - autotube - ERROR - GUI Error: Unexpected error during FFmpeg path verification
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\gui.py", line 450, in _find_and_verify_ffmpeg
+    _ = VideoProcessor(output_folder=".", # Dummy, doesn't need to exist for check
+                       ffmpeg_path=self.ffmpeg_exec,
+                       ffprobe_path=self.ffprobe_exec)
+TypeError: VideoProcessor.__init__() got an unexpected keyword argument 'output_folder'. Did you mean 'output_dir'?
+2025-04-05 13:06:49,517 - autotube - WARNING - --- GUI CONFIGURATION ISSUES ---
+2025-04-05 13:06:49,517 - autotube - WARNING - 1. FFmpeg/FFprobe not found or verified (Check bundled 'bin' folder, Environment Variables, or system PATH). Video processing disabled.
+2025-04-05 13:06:49,518 - autotube - WARNING - --- END CONFIGURATION ISSUES ---
+2025-04-05 13:11:34,118 - autotube - INFO - GUI: Window close requested.
+2025-04-05 13:11:34,118 - autotube - INFO - GUI: Exiting application.
+2025-04-05 13:11:34,215 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 13:11:34,216 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 13:11:41,450 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 13:11:41,451 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 13:11:41,451 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 13:11:41,451 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 13:11:41,451 - autotube - INFO - Platform: Windows (10)
+2025-04-05 13:11:41,451 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 13:11:41,451 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 13:11:41,499 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 13:11:41,499 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 13:11:41,500 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 13:11:41,500 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 13:11:41,500 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 13:11:41,500 - autotube - INFO - GUI: UI variables created.
+2025-04-05 13:11:41,501 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 13:11:41,502 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 13:11:41,502 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 13:11:41,502 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 13:11:41,502 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 13:11:41,503 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 13:11:41,514 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 13:11:42,255 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 13:11:42,256 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:11:42,256 - utils.video_processor - INFO - VideoProcessor initialized. Output Dir: '.'
+2025-04-05 13:11:42,256 - utils.video_processor - INFO - Using FFmpeg: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:11:42,294 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 13:11:42,295 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 13:11:42,324 - autotube - INFO - GUI: Tabs added.
+2025-04-05 13:11:42,324 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 13:11:42,428 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 13:11:42,611 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 13:11:42,722 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 13:11:42,791 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 13:11:42,793 - autotube - INFO - GUI: Status bar created.
+2025-04-05 13:11:42,794 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 13:11:42,794 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 13:11:42,794 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 13:11:42,801 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 13:11:42,959 - autotube - INFO - GUI: Initial configuration check passed.
+2025-04-05 13:11:54,593 - autotube - INFO - Adding 1 selected files.
+2025-04-05 13:11:54,593 - autotube - INFO - GUI: Added 1 new video(s) to the queue. Total queue size: 1
+2025-04-05 13:12:09,436 - autotube - INFO - GUI Action: Selecting default output folder via browse button.
+2025-04-05 13:12:13,280 - autotube - INFO - GUI: Default output folder set to: C:/Users/V0iD/Desktop/clips
+2025-04-05 13:12:13,974 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 13:12:13,975 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 13:12:13,984 - autotube - INFO - --- Starting Clipping Queue Processing Thread ---
+2025-04-05 13:12:13,984 - autotube - INFO - GUI: Clipping thread started successfully for 1 videos.
+2025-04-05 13:12:13,985 - autotube - INFO - Clipping Queue: Using FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:12:13,993 - autotube - INFO - CORE CLIP: Initializing VideoProcessor (Output: C:/Users/V0iD/Desktop/clips)
+2025-04-05 13:12:13,993 - autotube - INFO - VideoProcessor initialized. Output Dir: 'C:/Users/V0iD/Desktop/clips'
+2025-04-05 13:12:13,993 - autotube - INFO - Using FFmpeg: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:12:14,031 - autotube - INFO - CORE CLIP: VideoProcessor Initialized successfully.
+2025-04-05 13:12:14,032 - autotube - INFO - CORE CLIP: Processing video 1/1: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+2025-04-05 13:12:14,032 - autotube - INFO - --- Processing video: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4 ---
+2025-04-05 13:12:14,076 - autotube - INFO - Video Info for 'saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4': Duration=1852.28s, Res=1280x720, FPS=30.00
+2025-04-05 13:12:14,076 - autotube - INFO - Processing based on fixed interval or target number.
+2025-04-05 13:12:14,077 - autotube - INFO - Targeting ~1 clips. Effective clip duration: 60.00s (Min: 5.0, Max: 60.0)
+2025-04-05 13:12:14,077 - autotube - INFO - Extracting clip (copy): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_001.mp4 [0.000s -> 60.000s]
+2025-04-05 13:12:14,174 - autotube - INFO - Successfully extracted clip: C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_001.mp4
+2025-04-05 13:12:14,174 - autotube - INFO - --- Finished processing C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4. Generated 1 clips. ---
+2025-04-05 13:12:14,174 - autotube - INFO - CORE CLIP: Successfully processed saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4.
+2025-04-05 13:12:14,175 - autotube - INFO - CORE CLIP: Organizing 1 output files into date folders...
+2025-04-05 13:12:14,182 - utils.file_manager - INFO - Organized 16 files into C:\Users\V0iD\Desktop\clips\2025-04-05
+2025-04-05 13:12:14,182 - autotube - INFO - CORE CLIP: File organization complete.
+2025-04-05 13:12:14,182 - autotube - INFO - --- Clipping Queue Processing Finished. Success: 1, Errors: 0, Total Attempted: 1, Total Videos in Queue: 1, Stopped by user: False ---
+2025-04-05 13:12:14,183 - autotube - INFO - GUI Callback: 'Clipping' process finished or stopped.
+2025-04-05 13:12:14,183 - autotube - INFO - Clipping was stopped, keeping remaining items in queue.
+2025-04-05 13:12:14,191 - autotube - INFO - Clipping was stopped. Processed before stop: 1, Errors: 0
+2025-04-05 13:13:16,453 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 13:13:16,453 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 13:13:16,464 - autotube - INFO - --- Starting Clipping Queue Processing Thread ---
+2025-04-05 13:13:16,464 - autotube - INFO - GUI: Clipping thread started successfully for 1 videos.
+2025-04-05 13:13:16,465 - autotube - INFO - Clipping Queue: Using FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:13:16,475 - autotube - INFO - CORE CLIP: Initializing VideoProcessor (Output: C:/Users/V0iD/Desktop/clips)
+2025-04-05 13:13:16,475 - autotube - INFO - VideoProcessor initialized. Output Dir: 'C:/Users/V0iD/Desktop/clips'
+2025-04-05 13:13:16,475 - autotube - INFO - Using FFmpeg: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 13:13:16,512 - autotube - INFO - CORE CLIP: VideoProcessor Initialized successfully.
+2025-04-05 13:13:16,513 - autotube - INFO - CORE CLIP: Processing video 1/1: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+2025-04-05 13:13:16,513 - autotube - INFO - --- Processing video: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4 ---
+2025-04-05 13:13:16,556 - autotube - INFO - Video Info for 'saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4': Duration=1852.28s, Res=1280x720, FPS=30.00
+2025-04-05 13:13:16,556 - autotube - INFO - Processing based on fixed interval or target number.
+2025-04-05 13:13:16,557 - autotube - INFO - Targeting ~1 clips. Effective clip duration: 60.00s (Min: 5.0, Max: 60.0)
+2025-04-05 13:13:16,557 - autotube - INFO - Extracting clip (copy): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_001.mp4 [0.000s -> 60.000s]
+2025-04-05 13:13:16,631 - autotube - INFO - Successfully extracted clip: C:/Users/V0iD/Desktop/clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_001.mp4
+2025-04-05 13:13:16,631 - autotube - INFO - --- Finished processing C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4. Generated 1 clips. ---
+2025-04-05 13:13:16,632 - autotube - INFO - CORE CLIP: Successfully processed saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4.
+2025-04-05 13:13:16,632 - autotube - INFO - CORE CLIP: Organizing 1 output files into date folders...
+2025-04-05 13:13:16,634 - utils.file_manager - INFO - Organized 1 files into C:\Users\V0iD\Desktop\clips\2025-04-05
+2025-04-05 13:13:16,634 - autotube - INFO - CORE CLIP: File organization complete.
+2025-04-05 13:13:16,634 - autotube - INFO - --- Clipping Queue Processing Finished. Success: 1, Errors: 0, Total Attempted: 1, Total Videos in Queue: 1, Stopped by user: False ---
+2025-04-05 13:13:16,635 - autotube - INFO - GUI Callback: 'Clipping' process finished or stopped.
+2025-04-05 13:13:16,635 - autotube - INFO - Clipping was stopped, keeping remaining items in queue.
+2025-04-05 13:13:16,644 - autotube - INFO - Clipping was stopped. Processed before stop: 1, Errors: 0
+2025-04-05 14:37:24,397 - autotube - INFO - GUI: Window close requested.
+2025-04-05 14:37:24,398 - autotube - INFO - GUI: Exiting application.
+2025-04-05 14:37:24,500 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 14:37:24,500 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 14:49:33,149 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 14:49:33,149 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 14:49:33,150 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 14:49:33,150 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 14:49:33,150 - autotube - INFO - Platform: Windows (10)
+2025-04-05 14:49:33,150 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 14:49:33,150 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 14:49:33,198 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 14:49:33,199 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 14:49:33,199 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 14:49:33,199 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 14:49:33,199 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 14:49:33,200 - autotube - INFO - GUI: UI variables created.
+2025-04-05 14:49:33,200 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 14:49:33,200 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 14:49:33,200 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 14:49:33,200 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 14:49:33,201 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 14:49:33,201 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 14:49:33,213 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 14:49:33,928 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 14:49:33,929 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 14:49:33,929 - autotube - INFO - VideoProcessor initialized. Output Dir: '.'
+2025-04-05 14:49:33,929 - autotube - INFO - Using FFmpeg: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 14:49:33,970 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 14:49:33,970 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 14:49:33,999 - autotube - INFO - GUI: Tabs added.
+2025-04-05 14:49:33,999 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 14:49:34,073 - autotube - CRITICAL - Fatal error during GUI initialization
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\gui.py", line 167, in __init__
+    self._create_ui()          # Create widgets
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\V0iD\auto-tube\gui.py", line 552, in _create_ui
+    self.clipping_tab = ClippingTab(master=self.tab_view.tab("Video Clipper"), app_logic=self)
+                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\V0iD\auto-tube\ui\ui_tabs.py", line 20, in __init__
+    self._create_widgets(scrollable_frame) # Pass scrollable frame as master
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\V0iD\auto-tube\ui\ui_tabs.py", line 66, in _create_widgets
+    ("Remove Audio", self.app_logic.remove_audio_var, col1_frame),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VideoClipperApp' object has no attribute 'remove_audio_var'
+2025-04-05 14:49:34,078 - autotube - CRITICAL - GUI Init Error: 'VideoClipperApp' object has no attribute 'remove_audio_var'
+Traceback (most recent call last):
+  File "C:\Users\V0iD\auto-tube\gui.py", line 167, in __init__
+    self._create_ui()          # Create widgets
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\V0iD\auto-tube\gui.py", line 552, in _create_ui
+    self.clipping_tab = ClippingTab(master=self.tab_view.tab("Video Clipper"), app_logic=self)
+                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\V0iD\auto-tube\ui\ui_tabs.py", line 20, in __init__
+    self._create_widgets(scrollable_frame) # Pass scrollable frame as master
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\V0iD\auto-tube\ui\ui_tabs.py", line 66, in _create_widgets
+    ("Remove Audio", self.app_logic.remove_audio_var, col1_frame),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'VideoClipperApp' object has no attribute 'remove_audio_var'
+2025-04-05 14:49:34,082 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 14:49:34,087 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 14:49:44,302 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 14:49:44,303 - autotube - INFO - --- Autotube Application End ---
+2025-04-05 18:42:43,421 - autotube - INFO - ProcessingManager: All required utility modules loaded.
+2025-04-05 18:42:43,421 - autotube - INFO - GUI: Core modules imported successfully.
+2025-04-05 18:42:43,421 - autotube - INFO - --- Autotube Application Start ---
+2025-04-05 18:42:43,422 - autotube - INFO - Python Version: 3.13.2
+2025-04-05 18:42:43,422 - autotube - INFO - Platform: Windows (10)
+2025-04-05 18:42:43,422 - autotube - INFO - CustomTkinter Version: 5.2.2
+2025-04-05 18:42:43,422 - autotube - INFO - Creating TkinterDnD root window...
+2025-04-05 18:42:43,838 - autotube - INFO - Root TkinterDnD window created successfully.
+2025-04-05 18:42:43,838 - autotube - INFO - Initializing VideoClipperApp...
+2025-04-05 18:42:43,839 - autotube - INFO - GUI Config: Using configuration file path: C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json
+2025-04-05 18:42:43,839 - autotube - INFO - --- Initializing Autotube GUI ---
+2025-04-05 18:42:43,839 - autotube - INFO - GUI: Creating UI variables with default values...
+2025-04-05 18:42:43,839 - autotube - INFO - GUI: UI variables created.
+2025-04-05 18:42:43,840 - autotube - INFO - GUI: Loading settings from C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 18:42:43,845 - autotube - INFO - GUI: Settings loaded successfully from config file.
+2025-04-05 18:42:43,845 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 18:42:43,845 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 18:42:43,846 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 18:42:43,846 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 18:42:43,857 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-04-05 18:42:44,898 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 18:42:44,899 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:42:44,899 - autotube - INFO - VideoProcessor initialized. Output Dir Target: '.'
+2025-04-05 18:42:44,899 - autotube - INFO - Using potential FFmpeg path: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe'
+2025-04-05 18:42:44,899 - autotube - INFO - Using potential FFprobe path: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:42:44,899 - autotube - INFO - VideoProcessor attempting to verify FFmpeg: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe'
+2025-04-05 18:42:45,181 - autotube - INFO - Verification PASSED for FFmpeg.
+2025-04-05 18:42:45,181 - autotube - INFO - VideoProcessor attempting to verify FFprobe: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:42:45,463 - autotube - INFO - Verification PASSED for FFprobe.
+2025-04-05 18:42:45,463 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 18:42:45,464 - autotube - INFO - GUI: Creating main UI layout...
+2025-04-05 18:42:45,496 - autotube - INFO - GUI: Tabs added.
+2025-04-05 18:42:45,496 - autotube - INFO - GUI: Creating Clipping Tab content...
+2025-04-05 18:42:45,602 - autotube - INFO - GUI: Creating AI Short Tab content...
+2025-04-05 18:42:45,784 - autotube - INFO - GUI: Creating Metadata Tab content...
+2025-04-05 18:42:45,896 - autotube - INFO - GUI: Creating Settings Tab content...
+2025-04-05 18:42:45,966 - autotube - INFO - GUI: All Tab content created.
+2025-04-05 18:42:45,969 - autotube - INFO - GUI: Status bar created.
+2025-04-05 18:42:45,969 - autotube - INFO - GUI: Main UI creation complete.
+2025-04-05 18:42:45,969 - autotube - INFO - Autotube GUI initialized successfully.
+2025-04-05 18:42:45,969 - autotube - INFO - Initialization complete. Showing main window.
+2025-04-05 18:42:45,976 - autotube - INFO - Starting Tkinter main event loop...
+2025-04-05 18:42:46,128 - autotube - INFO - GUI: Initial configuration check passed.
+2025-04-05 18:42:46,129 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:42:54,404 - autotube - INFO - Adding 1 selected files.
+2025-04-05 18:42:54,405 - autotube - INFO - GUI: Added 1 new video(s) to the queue. Total queue size: 1
+2025-04-05 18:43:09,534 - autotube - INFO - GUI Action: Selecting default output folder via browse button.
+2025-04-05 18:43:13,921 - autotube - INFO - GUI: Default output folder set to: C:/Users/V0iD/Desktop/clips
+2025-04-05 18:43:15,304 - autotube - INFO - GUI Action: Start Clipping Queue button clicked.
+2025-04-05 18:43:15,304 - autotube - INFO - Attempting to start clipping process...
+2025-04-05 18:43:15,304 - autotube - INFO - GUI: Preparing to start clipping with validated options: {'num_clips': 10, 'min_duration': 35.0, 'max_duration': 45.0, 'use_scene_detection': False, 'scene_threshold': 30.0, 'use_codec_copy': True, 'organize_output': True}
+2025-04-05 18:43:15,305 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:43:15,314 - autotube - INFO - --- Starting Clipping Queue Processing Thread ---
+2025-04-05 18:43:15,314 - autotube - INFO - GUI: Clipping thread started successfully for 1 videos.
+2025-04-05 18:43:15,315 - autotube - INFO - Clipping Queue: Using FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:43:15,326 - autotube - INFO - CORE CLIP: Initializing VideoProcessor (Output: C:/Users/V0iD/Desktop/clips)
+2025-04-05 18:43:15,327 - autotube - INFO - VideoProcessor initialized. Output Dir Target: 'C:/Users/V0iD/Desktop/clips'
+2025-04-05 18:43:15,327 - autotube - INFO - Using potential FFmpeg path: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe'
+2025-04-05 18:43:15,327 - autotube - INFO - Using potential FFprobe path: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:43:15,327 - autotube - INFO - VideoProcessor attempting to verify FFmpeg: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe'
+2025-04-05 18:43:15,346 - autotube - INFO - Verification PASSED for FFmpeg.
+2025-04-05 18:43:15,347 - autotube - INFO - VideoProcessor attempting to verify FFprobe: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:43:15,365 - autotube - INFO - Verification PASSED for FFprobe.
+2025-04-05 18:43:15,365 - autotube - INFO - Output directory ensured: 'C:/Users/V0iD/Desktop/clips'
+2025-04-05 18:43:15,365 - autotube - INFO - CORE CLIP: VideoProcessor Initialized successfully.
+2025-04-05 18:43:15,366 - autotube - INFO - CORE CLIP: Processing video 1/1: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4
+2025-04-05 18:43:15,366 - autotube - INFO - --- Processing video: C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4 ---
+2025-04-05 18:43:15,366 - autotube - WARNING - Vertical formatting requires re-encoding. 'Use Codec Copy' option will be ignored by _extract_clip.
+2025-04-05 18:43:15,417 - autotube - INFO - Video Info for 'saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4': Duration=1852.28s, Res=1280x720, FPS=30.00
+2025-04-05 18:43:15,418 - autotube - INFO - Processing based on fixed interval or target number. Output will be 9:16.
+2025-04-05 18:43:15,418 - autotube - INFO - Targeting ~10 clips. Effective clip duration: 45.00s (Min: 35.0, Max: 45.0)
+2025-04-05 18:43:15,418 - autotube - INFO - Interval 1: Start=0.000, End=45.000, Duration=45.000
+2025-04-05 18:43:15,418 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_001_9x16.mp4 [0.000s -> 45.000s]
+2025-04-05 18:43:36,760 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_001_9x16.mp4
+2025-04-05 18:43:36,760 - autotube - INFO - Interval 2: Start=45.000, End=90.000, Duration=45.000
+2025-04-05 18:43:36,760 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_002_9x16.mp4 [45.000s -> 90.000s]
+2025-04-05 18:43:58,475 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_002_9x16.mp4
+2025-04-05 18:43:58,476 - autotube - INFO - Interval 3: Start=90.000, End=135.000, Duration=45.000
+2025-04-05 18:43:58,476 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_003_9x16.mp4 [90.000s -> 135.000s]
+2025-04-05 18:44:20,313 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_003_9x16.mp4
+2025-04-05 18:44:20,314 - autotube - INFO - Interval 4: Start=135.000, End=180.000, Duration=45.000
+2025-04-05 18:44:20,314 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_004_9x16.mp4 [135.000s -> 180.000s]
+2025-04-05 18:44:41,958 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_004_9x16.mp4
+2025-04-05 18:44:41,958 - autotube - INFO - Interval 5: Start=180.000, End=225.000, Duration=45.000
+2025-04-05 18:44:41,959 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_005_9x16.mp4 [180.000s -> 225.000s]
+2025-04-05 18:45:03,254 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_005_9x16.mp4
+2025-04-05 18:45:03,255 - autotube - INFO - Interval 6: Start=225.000, End=270.000, Duration=45.000
+2025-04-05 18:45:03,255 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_006_9x16.mp4 [225.000s -> 270.000s]
+2025-04-05 18:45:24,893 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_006_9x16.mp4
+2025-04-05 18:45:24,894 - autotube - INFO - Interval 7: Start=270.000, End=315.000, Duration=45.000
+2025-04-05 18:45:24,894 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_007_9x16.mp4 [270.000s -> 315.000s]
+2025-04-05 18:45:46,341 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_007_9x16.mp4
+2025-04-05 18:45:46,341 - autotube - INFO - Interval 8: Start=315.000, End=360.000, Duration=45.000
+2025-04-05 18:45:46,341 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_008_9x16.mp4 [315.000s -> 360.000s]
+2025-04-05 18:46:06,719 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_008_9x16.mp4
+2025-04-05 18:46:06,719 - autotube - INFO - Interval 9: Start=360.000, End=405.000, Duration=45.000
+2025-04-05 18:46:06,720 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_009_9x16.mp4 [360.000s -> 405.000s]
+2025-04-05 18:46:27,914 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_009_9x16.mp4
+2025-04-05 18:46:27,915 - autotube - INFO - Interval 10: Start=405.000, End=450.000, Duration=45.000
+2025-04-05 18:46:27,915 - autotube - INFO - Extracting clip (re-encode, 9:16): saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_010_9x16.mp4 [405.000s -> 450.000s]
+2025-04-05 18:46:48,651 - autotube - INFO - Successfully extracted clip (9:16 formatted): C:\Users\V0iD\Desktop\clips\saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright_clip_010_9x16.mp4
+2025-04-05 18:46:48,652 - autotube - INFO - --- Finished processing C:/Users/V0iD/Downloads/saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4. Generated 10 vertically formatted clips. ---
+2025-04-05 18:46:48,652 - autotube - INFO - CORE CLIP: Successfully processed saveinsta.cc_720p-minecraft-parkour-gameplay-no-copyright.mp4.
+2025-04-05 18:46:48,652 - autotube - INFO - CORE CLIP: Organizing 10 output files into date folders...
+2025-04-05 18:46:48,658 - utils.file_manager - INFO - Organized 10 files into C:\Users\V0iD\Desktop\clips\2025-04-05
+2025-04-05 18:46:48,658 - autotube - INFO - CORE CLIP: File organization complete.
+2025-04-05 18:46:48,658 - autotube - INFO - --- Clipping Queue Processing Finished. Success: 1, Errors: 0, Total Attempted: 1, Total Videos in Queue: 1, Stopped by user: False ---
+2025-04-05 18:46:48,659 - autotube - INFO - GUI Callback: 'Clipping' process finished or stopped.
+2025-04-05 18:46:48,659 - autotube - INFO - Clipping was stopped, potentially keeping remaining items in queue.
+2025-04-05 18:46:48,660 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:46:48,668 - autotube - INFO - Clipping was stopped. Processed before stop: 1, Errors: 0
+2025-04-05 18:48:10,787 - autotube - INFO - Attempting to start AI script generation...
+2025-04-05 18:48:10,787 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:48:10,796 - autotube - INFO - GUI: Starting Gemini script generation thread...
+2025-04-05 18:48:10,797 - autotube - INFO - --- Starting Gemini Script Generation Thread ---
+2025-04-05 18:48:10,797 - autotube - INFO - CORE AI SCRIPT: Starting generation for prompt: '45 second viral finance short...'
+2025-04-05 18:48:11,343 - autotube - ERROR - CORE AI SCRIPT: Gemini API Error: Failed during Script Generation: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2025-04-05 18:48:11,344 - autotube - INFO - --- Gemini Script Generation Thread Finished ---
+2025-04-05 18:48:11,344 - autotube - INFO - GUI Callback: Script generation complete.
+2025-04-05 18:48:11,344 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:48:11,352 - autotube - ERROR - Script Generation Error: Script generation failed (Gemini API Error):
+Failed during Script Generation: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+(Check API key, quotas, and network connection)
+2025-04-05 18:48:22,728 - autotube - INFO - GUI: Saving settings to C:\Users\V0iD\AppData\Roaming\Autotube\autotube_config.json...
+2025-04-05 18:48:22,729 - autotube - INFO - GUI: Settings saved successfully.
+2025-04-05 18:48:24,928 - autotube - INFO - GUI: Re-configuring APIs and checking FFmpeg after saving settings...
+2025-04-05 18:48:24,928 - autotube - INFO - GUI: Configuring external APIs (Priority: Environment Variables > Saved Settings)...
+2025-04-05 18:48:24,929 - autotube - INFO - Using Google API Key from: Saved Settings
+2025-04-05 18:48:24,929 - autotube - INFO - Configuring AWS Polly using credentials/region from: Default Chain (e.g., ~/.aws/credentials, IAM role)
+2025-04-05 18:48:24,929 - autotube - INFO - AWS Region specified: us-east-1
+2025-04-05 18:48:24,929 - autotube - INFO - GUI: Locating and verifying FFmpeg/FFprobe...
+2025-04-05 18:48:24,930 - autotube - INFO - GUI: Auto-detected FFmpeg='C:\Users\V0iD\auto-tube\bin\ffmpeg.exe', FFprobe='C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:48:24,931 - autotube - INFO - VideoProcessor initialized. Output Dir Target: '.'
+2025-04-05 18:48:24,931 - autotube - INFO - Using potential FFmpeg path: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe'
+2025-04-05 18:48:24,931 - autotube - INFO - Using potential FFprobe path: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:48:24,931 - autotube - INFO - VideoProcessor attempting to verify FFmpeg: 'C:\Users\V0iD\auto-tube\bin\ffmpeg.exe'
+2025-04-05 18:48:24,950 - autotube - INFO - Verification PASSED for FFmpeg.
+2025-04-05 18:48:24,950 - autotube - INFO - VideoProcessor attempting to verify FFprobe: 'C:\Users\V0iD\auto-tube\bin\ffprobe.exe'
+2025-04-05 18:48:24,968 - autotube - INFO - Verification PASSED for FFprobe.
+2025-04-05 18:48:24,968 - autotube - INFO - GUI: FFmpeg/FFprobe paths verified successfully.
+2025-04-05 18:48:24,968 - autotube - INFO - GUI: Initial configuration check passed.
+2025-04-05 18:48:24,968 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:48:28,553 - autotube - INFO - Attempting to start AI script generation...
+2025-04-05 18:48:28,553 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:48:28,562 - autotube - INFO - GUI: Starting Gemini script generation thread...
+2025-04-05 18:48:28,563 - autotube - INFO - --- Starting Gemini Script Generation Thread ---
+2025-04-05 18:48:28,563 - autotube - INFO - CORE AI SCRIPT: Starting generation for prompt: '45 second viral finance short...'
+2025-04-05 18:48:28,636 - autotube - ERROR - CORE AI SCRIPT: Gemini API Error: Failed during Script Generation: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2025-04-05 18:48:28,637 - autotube - INFO - --- Gemini Script Generation Thread Finished ---
+2025-04-05 18:48:28,637 - autotube - INFO - GUI Callback: Script generation complete.
+2025-04-05 18:48:28,637 - autotube - WARNING - Could not get default button colors from ThemeManager: 'disabled_fg_color'. Using fallback.
+2025-04-05 18:48:28,646 - autotube - ERROR - Script Generation Error: Script generation failed (Gemini API Error):
+Failed during Script Generation: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+
+(Check API key, quotas, and network connection)
+2025-04-05 18:49:28,974 - autotube - INFO - GUI: Window close requested.
+2025-04-05 18:49:28,974 - autotube - INFO - GUI: Exiting application.
+2025-04-05 18:49:29,073 - autotube - INFO - Tkinter main event loop finished.
+2025-04-05 18:49:29,073 - autotube - INFO - --- Autotube Application End ---
